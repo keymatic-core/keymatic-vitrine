@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://keymatic.com.br/sitemap.xml

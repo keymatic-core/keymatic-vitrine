@@ -1,0 +1,228 @@
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════════════════════
+   KEYMATIC — Design System v3: "Craft" Aesthetic
+   Inspired by Resend, Raycast, Linear
+   ═══════════════════════════════════════════════════════════ */
+
+@theme inline {
+  --color-background: #09090b;
+  --color-foreground: #fafafa;
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  /* Zinc Scale (base) */
+  --color-zinc-950: #09090b;
+  --color-zinc-900: #18181b;
+  --color-zinc-800: #27272a;
+  --color-zinc-700: #3f3f46;
+  --color-zinc-600: #52525b;
+  --color-zinc-500: #71717a;
+  --color-zinc-400: #a1a1aa;
+  --color-zinc-300: #d4d4d8;
+  --color-zinc-200: #e4e4e7;
+  --color-zinc-100: #f4f4f5;
+  --color-zinc-50: #fafafa;
+
+  /* Brand Accents (Orange → Purple) */
+  --color-brand-orange: #f97316;
+  --color-brand-purple: #a855f7;
+  --color-brand-pink: #ec4899;
+
+  /* Functional */
+  --color-accent: #f97316;
+  --color-accent-secondary: #a855f7;
+  --color-success: #22c55e;
+  --color-info: #3b82f6;
+}
+
+/* ─── Base ───────────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #09090b;
+  color: #fafafa;
+  font-family: var(--font-sans, system-ui, -apple-system, sans-serif);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: rgba(249, 115, 22, 0.25);
+  color: #fafafa;
+}
+
+/* ─── Scroll Progress ────────────────────────────────────── */
+.scroll-progress {
+  transform-origin: left;
+  background: linear-gradient(90deg, #f97316, #a855f7);
+}
+
+/* ─── Glass (Resend-style) ────────────────────────────────── */
+.glass {
+  background: rgba(9, 9, 11, 0.5);
+  backdrop-filter: blur(24px) saturate(1.2);
+  -webkit-backdrop-filter: blur(24px) saturate(1.2);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* ─── Card Base ───────────────────────────────────────────── */
+.card-dark {
+  background: #18181b;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.card-dark:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+/* ─── Card with Gradient Border (Raycast-style) ───────────── */
+.card-gradient-border {
+  position: relative;
+  background: #18181b;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  transition: transform 0.2s ease;
+}
+
+.card-gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(249, 115, 22, 0.3), rgba(168, 85, 247, 0.3));
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: xor;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card-gradient-border:hover::before {
+  opacity: 1;
+}
+
+.card-gradient-border:hover {
+  transform: translateY(-2px);
+}
+
+/* ─── Section Light (Resend "Inbound" style) ──────────────── */
+.section-light {
+  background: #f4f4f5;
+  color: #09090b;
+}
+
+.section-light-white {
+  background: #ffffff;
+  color: #09090b;
+}
+
+/* ─── Brand Gradient ──────────────────────────────────────── */
+.gradient-brand {
+  background: linear-gradient(135deg, #f97316, #ec4899, #a855f7);
+}
+
+.gradient-brand-text {
+  background: linear-gradient(135deg, #f97316, #ec4899, #a855f7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-brand-subtle {
+  background: linear-gradient(135deg, rgba(249, 115, 22, 0.08), rgba(168, 85, 247, 0.08));
+}
+
+/* ─── Glow Effects ────────────────────────────────────────── */
+.glow-brand {
+  box-shadow: 0 0 40px rgba(249, 115, 22, 0.08), 0 0 80px rgba(168, 85, 247, 0.05);
+}
+
+/* ─── Mouse Glow (applied via JS) ─────────────────────────── */
+.mouse-glow {
+  position: fixed;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(249, 115, 22, 0.055) 0%, rgba(168, 85, 247, 0.03) 38%, transparent 68%);
+  pointer-events: none;
+  z-index: 0;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s ease;
+}
+
+/* ─── Pulse Glow (WhatsApp) ───────────────────────────────── */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 12px rgba(37, 211, 102, 0.3); }
+  50% { box-shadow: 0 0 24px rgba(37, 211, 102, 0.5), 0 0 48px rgba(37, 211, 102, 0.15); }
+}
+
+.pulse-glow {
+  animation: pulse-glow 2.5s ease-in-out infinite;
+}
+
+/* ─── Section Spacing ─────────────────────────────────────── */
+.section-padding {
+  padding-top: 6rem;
+  padding-bottom: 6rem;
+}
+
+@media (min-width: 1024px) {
+  .section-padding {
+    padding-top: 8rem;
+    padding-bottom: 8rem;
+  }
+}
+
+/* ─── Subtle Grid ─────────────────────────────────────────── */
+.bg-grid-subtle {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+  background-size: 80px 80px;
+}
+
+/* ─── Scrollbar ───────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #09090b; }
+::-webkit-scrollbar-thumb { background: #27272a; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #3f3f46; }
+
+/* ─── FAQ Gradient Border (light section) ────────────────── */
+.faq-item {
+  position: relative;
+}
+
+.faq-item-active {
+  border-color: transparent !important;
+}
+
+.faq-item-active::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(249, 115, 22, 0.6), rgba(168, 85, 247, 0.6));
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: xor;
+  pointer-events: none;
+}
+
+.faq-item-active {
+  box-shadow: 0 0 20px rgba(249, 115, 22, 0.06), 0 0 40px rgba(168, 85, 247, 0.04);
+}
+
+/* ─── Divider ─────────────────────────────────────────────── */
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
+}
