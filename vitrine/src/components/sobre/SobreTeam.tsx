@@ -6,20 +6,20 @@ import { Linkedin } from "lucide-react";
 
 const TEAM = [
   {
-    name: "Valéria Barboza",
-    role: "Co-fundadora & Diretora de Operações (COO)",
-    bio: "Lidera a Gestão de Projetos e a Implantação Hands-on, garantindo que sua tecnologia saia do papel e gere lucro. Especialista em Automação de processos e Treinamento de IA para Negócios, focada em transformar horas de trabalho manual em minutos de produtividade. Traz o legado de 20 anos de confiança da VTS Informática para o atendimento consultivo e próximo ao cliente.",
-    avatar: "/team/valeria.jpg",
-    initials: "VB",
-    tags: ["Gestão & Projetos", "Automação de Processos", "Treinamento de IA"],
-  },
-  {
     name: "Tércio Rigonati",
     role: "Co-fundador & Diretor de Tecnologia (CTO)",
     bio: "Arquiteta e constrói a infraestrutura técnica que sustenta sua operação, utilizando Django e PostgreSQL. Especialista em Desenvolvimento & Arquitetura de IA de alta performance, garantindo que seu sistema seja seguro, escalável e tecnicamente impecável. O \"motor\" por trás da Keymatic, focado em transformar complexidade técnica em interfaces fluidas e robustas.",
     avatar: "/team/tercio.jpg",
     initials: "TR",
     tags: ["Arquitetura & IA", "Django & PostgreSQL", "Infraestrutura"],
+  },
+  {
+    name: "Valéria Barboza",
+    role: "Co-fundadora & Diretora de Operações (COO)",
+    bio: "Lidera a Gestão de Projetos e a Implantação Hands-on, garantindo que sua tecnologia saia do papel e gere lucro. Especialista em Automação de processos e Treinamento de IA para Negócios, focada em transformar horas de trabalho manual em minutos de produtividade. Traz o legado de 20 anos de confiança da VTS Informática para o atendimento consultivo e próximo ao cliente.",
+    avatar: "/team/valeria.jpg",
+    initials: "VB",
+    tags: ["Gestão & Projetos", "Automação de Processos", "Treinamento de IA"],
   },
   {
     name: "Matheus Barboza",
