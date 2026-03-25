@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import QuizBanner from "../components/QuizBanner";
 
 const inter = Inter({
   variable: "--font-geist-sans",
@@ -100,6 +101,7 @@ export default function RootLayout({
     <html lang="pt-BR">
       <body className={`${inter.variable} ${jetbrainsMono.variable} antialiased`}>
         {children}
+        <QuizBanner />
       </body>
     </html>
   );

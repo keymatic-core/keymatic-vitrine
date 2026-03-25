@@ -1,22 +1,24 @@
-import { MessageCircle, Mail, MapPin } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
+import WhatsAppIcon from "./icons/WhatsAppIcon";
+import { KeymaticIcon } from "./icons/KeymaticLogo";
 import { getWhatsAppUrl } from "../lib/utils";
 
 const FOOTER_LINKS = {
   solucoes: [
-    { label: "E-commerce de Elite", href: "#solucoes" },
-    { label: "Automação Inteligente", href: "#solucoes" },
-    { label: "Consultoria em IA", href: "#solucoes" },
+    { label: "E-commerce de Elite", href: "/ecommerce" },
+    { label: "Automação Inteligente", href: "/automacao" },
+    { label: "Consultoria em IA", href: "/consultoria-ia" },
     { label: "Cases de Sucesso", href: "#cases" },
   ],
   empresa: [
-    { label: "Sobre a Keymatic", href: "#" },
-    { label: "Nossa História (VTS)", href: "#" },
+    { label: "Quem Somos", href: "/sobre" },
+    { label: "Nossa História", href: "/sobre#historia" },
     { label: "Blog", href: "#" },
     { label: "Carreiras", href: "#" },
   ],
   legal: [
     { label: "Política de Privacidade", href: "/politica-de-privacidade" },
-    { label: "Termos de Uso", href: "#" },
+    { label: "Termos de Uso", href: "/termos" },
     { label: "Conformidade LGPD", href: "/politica-de-privacidade#7" },
     { label: "Política de Cookies", href: "/politica-de-privacidade#6" },
   ],
@@ -84,29 +86,55 @@ export default function Footer() {
           <div>
             <h4 className="text-[13px] font-semibold mb-4 text-zinc-300">Contato</h4>
             <ul className="space-y-3">
+              {/* WhatsApp */}
               <li>
                 <a
                   href={getWhatsAppUrl("Olá! Vim pelo site da Keymatic.")}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-[13px] text-zinc-600 hover:text-zinc-400 transition-colors"
+                  className="flex items-center gap-2 text-[13px] text-zinc-500 hover:text-zinc-300 transition-colors"
                 >
-                  <MessageCircle size={13} />
-                  WhatsApp
+                  <WhatsAppIcon size={13} className="text-[#25D366]" />
+                  (11) 93429-4637
                 </a>
               </li>
+              {/* Telefone */}
+              <li>
+                <a
+                  href="tel:+5511934294637"
+                  className="flex items-center gap-2 text-[13px] text-zinc-500 hover:text-zinc-300 transition-colors"
+                >
+                  <Phone size={13} />
+                  (11) 93429-4637
+                </a>
+              </li>
+              {/* Email */}
               <li>
                 <a
                   href="mailto:contato@keymatic.com.br"
-                  className="flex items-center gap-2 text-[13px] text-zinc-600 hover:text-zinc-400 transition-colors"
+                  className="flex items-center gap-2 text-[13px] text-zinc-500 hover:text-zinc-300 transition-colors"
                 >
                   <Mail size={13} />
                   contato@keymatic.com.br
                 </a>
               </li>
-              <li className="flex items-start gap-2 text-[13px] text-zinc-600">
-                <MapPin size={13} className="shrink-0 mt-0.5" />
-                <span>São Mateus, São Paulo — SP</span>
+              {/* Endereço completo — link para Google Maps */}
+              <li>
+                <a
+                  href="https://www.google.com/maps/search/?api=1&query=Rua+Dr.+Aureliano+da+Silva+Arruda,+625+-+S%C3%A3o+Mateus,+S%C3%A3o+Paulo+-+SP,+03960-050"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-start gap-2 text-[13px] text-zinc-500 hover:text-zinc-300 transition-colors"
+                >
+                  <MapPin size={13} className="shrink-0 mt-0.5" />
+                  <span>
+                    Rua Dr. Aureliano da Silva Arruda, 625
+                    <br />
+                    São Paulo — SP
+                    <br />
+                    CEP 03960-050
+                  </span>
+                </a>
               </li>
             </ul>
 
@@ -117,11 +145,9 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="py-6 border-t border-white/[0.04] flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2.5">
-            <div className="w-6 h-6 rounded-md gradient-brand flex items-center justify-center font-mono font-bold text-[10px] text-white">
-              K
-            </div>
+            <KeymaticIcon size={26} />
             <span className="text-[12px] text-zinc-600">
-              &copy; {new Date().getFullYear()} Keymatic &mdash; Uma marca VTS Inform&aacute;tica &middot; 20 anos de hist&oacute;ria
+              Keymatic &copy; 2025 &mdash; VTS Com&eacute;rcio e Servi&ccedil;os LTDA &mdash; CNPJ: 03.477.617/0001-90
             </span>
           </div>
           <a href="#" className="text-[12px] text-zinc-600 hover:text-zinc-400 transition-colors">
@@ -146,7 +172,7 @@ export default function Footer() {
             address: {
               "@type": "PostalAddress",
               streetAddress: "Rua Dr. Aureliano da Silva Arruda, 625",
-              addressLocality: "São Mateus",
+              addressLocality: "São Paulo",
               addressRegion: "SP",
               postalCode: "03960-050",
               addressCountry: "BR",

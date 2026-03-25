@@ -3,13 +3,43 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ArrowRight, ShoppingCart, Bot, Brain, ChevronDown } from "lucide-react";
+import { KeymaticIcon } from "./icons/KeymaticLogo";
 import { getWhatsAppUrl } from "../lib/utils";
 
-const SIMPLE_LINKS = [
+const HOME_LINKS = [
   { label: "Como Funciona", href: "#como-funciona" },
   { label: "Cases", href: "#cases" },
   { label: "Diferenciais", href: "#diferenciais" },
   { label: "Contato", href: "#contato" },
+];
+
+const ECOM_LINKS = [
+  { label: "Showcase", href: "#accordion-showcase" },
+  { label: "Features", href: "#features-ecom" },
+  { label: "Case", href: "#case-ecom" },
+  { label: "Infraestrutura", href: "#infra-ecom" },
+  { label: "Contato", href: "#contato-ecom" },
+];
+
+const SOBRE_LINKS = [
+  { label: "Nossa História", href: "#historia" },
+  { label: "Time", href: "#time" },
+  { label: "Valores", href: "#valores" },
+  { label: "Contato", href: "#contato-sobre" },
+];
+
+const AUTO_LINKS = [
+  { label: "Como Funciona", href: "#como-funciona-auto" },
+  { label: "Serviços", href: "#servicos-auto" },
+  { label: "Diferenciais", href: "#diferenciais-auto" },
+  { label: "Contato", href: "#contato-auto" },
+];
+
+const IA_LINKS = [
+  { label: "Serviços", href: "#servicos-ia" },
+  { label: "Como Funciona", href: "#como-funciona-ia" },
+  { label: "Quiz", href: "#quiz-ia" },
+  { label: "Contato", href: "#contato-ia" },
 ];
 
 const SOLUTIONS_DROPDOWN = [
@@ -17,23 +47,25 @@ const SOLUTIONS_DROPDOWN = [
     icon: ShoppingCart,
     title: "E-commerce de Elite",
     desc: "Lojas para grandes lançamentos e drops.",
-    href: "#solucoes",
+    href: "/ecommerce",
   },
   {
     icon: Bot,
     title: "Automação Inteligente",
     desc: "WhatsApp + Evolution API e processos automáticos.",
-    href: "#solucoes",
+    href: "/automacao",
   },
   {
     icon: Brain,
     title: "Consultoria em IA",
     desc: "IA para produtividade e treinamento de equipes.",
-    href: "#solucoes",
+    href: "/consultoria-ia",
   },
 ];
 
-export default function Navbar() {
+export default function Navbar({ variant = "dark", page = "home" }: { variant?: "dark" | "light"; page?: "home" | "ecommerce" | "sobre" | "automacao" | "ia" }) {
+  const isLight = variant === "light";
+  const SIMPLE_LINKS = page === "ecommerce" ? ECOM_LINKS : page === "sobre" ? SOBRE_LINKS : page === "automacao" ? AUTO_LINKS : page === "ia" ? IA_LINKS : HOME_LINKS;
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [showSolutions, setShowSolutions] = useState(false);
@@ -92,7 +124,7 @@ export default function Navbar() {
         transition={{ duration: 0.5, ease: "easeOut" }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
-            ? "bg-zinc-950/50 backdrop-blur-xl border-b border-zinc-800/50"
+            ? "bg-zinc-950/80 backdrop-blur-xl border-b border-zinc-800/50"
             : "bg-transparent"
         }`}
       >
@@ -116,11 +148,9 @@ export default function Navbar() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="flex items-center justify-between h-14">
             {/* Logo */}
-            <a href="#" className="flex items-center gap-2.5">
-              <div className="w-7 h-7 rounded-lg gradient-brand flex items-center justify-center font-mono font-bold text-xs text-white">
-                K
-              </div>
-              <span className="text-sm font-semibold tracking-tight text-zinc-50">
+            <a href="/" className="flex items-center gap-2">
+              <KeymaticIcon size={32} />
+              <span className={`text-sm font-semibold tracking-tight ${isLight && !isScrolled ? "text-zinc-900" : "text-zinc-50"}`}>
                 Keymatic
               </span>
             </a>
@@ -136,7 +166,7 @@ export default function Navbar() {
                 {hoverRect && hoveredIndex !== null && (
                   <motion.div
                     layoutId="nav-highlight"
-                    className="absolute top-1/2 -translate-y-1/2 h-8 rounded-md bg-white/[0.08] border border-white/[0.06]"
+                    className={`absolute top-1/2 -translate-y-1/2 h-8 rounded-md ${isLight && !isScrolled ? "bg-black/[0.06] border border-black/[0.06]" : "bg-white/[0.08] border border-white/[0.06]"}`}
                     initial={{ opacity: 0 }}
                     animate={{
                       opacity: 1,
@@ -159,7 +189,7 @@ export default function Navbar() {
                 <button
                   ref={(el) => { linkRefs.current[0] = el; }}
                   onMouseEnter={() => handleMouseEnterLink(0)}
-                  className="relative z-10 flex items-center gap-1 px-3 py-1.5 text-[13px] text-zinc-400 hover:text-zinc-50 transition-colors duration-150 rounded-md"
+                  className={`relative z-10 flex items-center gap-1 px-3 py-1.5 text-[13px] transition-colors duration-150 rounded-md ${isLight && !isScrolled ? "text-zinc-600 hover:text-zinc-950" : "text-zinc-400 hover:text-zinc-50"}`}
                 >
                   Soluções
                   <ChevronDown
@@ -178,7 +208,17 @@ export default function Navbar() {
                       transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
                       onMouseEnter={keepDropdown}
                       onMouseLeave={closeDropdown}
-                      className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[360px] rounded-2xl bg-zinc-900/95 backdrop-blur-2xl border border-zinc-800/60 shadow-2xl shadow-black/40 p-2 overflow-hidden"
+                      className={`absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[360px] rounded-2xl backdrop-blur-2xl shadow-2xl p-2 overflow-hidden ${
+                        isLight && !isScrolled
+                          ? page === "automacao"
+                            ? "bg-purple-100/75 border border-purple-200/30 shadow-purple-900/10"
+                            : page === "ia"
+                              ? "bg-purple-100/75 border border-purple-200/30 shadow-purple-900/10"
+                              : page === "ecommerce"
+                                ? "bg-zinc-100/75 border border-zinc-200/20 shadow-black/10"
+                                : "bg-zinc-200/75 border border-zinc-300/30 shadow-black/10"
+                          : "bg-zinc-900/85 border border-zinc-700/30 shadow-black/50"
+                      }`}
                     >
                       {SOLUTIONS_DROPDOWN.map((item) => {
                         const Icon = item.icon;
@@ -187,16 +227,20 @@ export default function Navbar() {
                             key={item.title}
                             href={item.href}
                             onClick={() => setShowSolutions(false)}
-                            className="group flex items-start gap-3.5 px-3.5 py-3 rounded-xl hover:bg-white/[0.04] transition-colors duration-150"
+                            className={`group flex items-start gap-3.5 px-3.5 py-3 rounded-xl transition-colors duration-150 ${isLight && !isScrolled ? "hover:bg-black/[0.04]" : "hover:bg-white/[0.04]"}`}
                           >
-                            <div className="w-9 h-9 rounded-lg bg-white/[0.04] border border-white/[0.06] flex items-center justify-center shrink-0 mt-0.5 group-hover:border-brand-orange/20 group-hover:shadow-[0_0_12px_rgba(249,115,22,0.08)] transition-all duration-200">
-                              <Icon size={17} className="text-zinc-400 group-hover:text-zinc-200 transition-colors" />
+                            <div className={`dropdown-icon-gradient w-9 h-9 rounded-lg flex items-center justify-center shrink-0 mt-0.5 transition-all duration-200 ${
+                              isLight && !isScrolled
+                                ? "bg-black/[0.04]"
+                                : "bg-white/[0.04]"
+                            }`}>
+                              <Icon size={17} className={`transition-colors ${isLight && !isScrolled ? "text-zinc-500 group-hover:text-zinc-700" : "text-zinc-400 group-hover:text-zinc-200"}`} />
                             </div>
                             <div>
-                              <span className="block text-[13px] font-semibold text-zinc-200 group-hover:text-white transition-colors">
+                              <span className={`block text-[13px] font-semibold transition-colors ${isLight && !isScrolled ? "text-zinc-800 group-hover:text-zinc-950" : "text-zinc-200 group-hover:text-white"}`}>
                                 {item.title}
                               </span>
-                              <span className="block text-[12px] text-zinc-500 leading-relaxed mt-0.5">
+                              <span className={`block text-[12px] leading-relaxed mt-0.5 ${isLight && !isScrolled ? "text-zinc-500" : "text-zinc-500"}`}>
                                 {item.desc}
                               </span>
                             </div>
@@ -215,7 +259,7 @@ export default function Navbar() {
                   href={link.href}
                   ref={(el) => { linkRefs.current[i + 1] = el; }}
                   onMouseEnter={() => handleMouseEnterLink(i + 1)}
-                  className="relative z-10 px-3 py-1.5 text-[13px] text-zinc-400 hover:text-zinc-50 transition-colors duration-150 rounded-md"
+                  className={`relative z-10 px-3 py-1.5 text-[13px] transition-colors duration-150 rounded-md ${isLight && !isScrolled ? "text-zinc-600 hover:text-zinc-950" : "text-zinc-400 hover:text-zinc-50"}`}
                 >
                   {link.label}
                 </a>
@@ -228,14 +272,14 @@ export default function Navbar() {
                 href={getWhatsAppUrl("Olá! Vim pelo site e gostaria de falar com um especialista.")}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hidden sm:inline-flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-[13px] font-medium text-zinc-950 bg-zinc-50 hover:bg-white hover:shadow-[0_0_20px_rgba(255,255,255,0.15)] transition-all duration-200"
+                className={`hidden sm:inline-flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-[13px] font-medium transition-all duration-200 ${isLight && !isScrolled ? "text-white bg-zinc-900 hover:bg-zinc-800 hover:shadow-lg" : "text-zinc-950 bg-zinc-50 hover:bg-white hover:shadow-[0_0_20px_rgba(255,255,255,0.15)]"}`}
               >
                 Falar com Especialista
                 <ArrowRight size={13} />
               </a>
               <button
                 onClick={() => setIsMobileOpen(!isMobileOpen)}
-                className="lg:hidden p-1.5 text-zinc-400 hover:text-zinc-50 transition-colors"
+                className={`lg:hidden p-1.5 transition-colors ${isLight && !isScrolled ? "text-zinc-600 hover:text-zinc-950" : "text-zinc-400 hover:text-zinc-50"}`}
                 aria-label="Menu"
               >
                 {isMobileOpen ? <X size={20} /> : <Menu size={20} />}

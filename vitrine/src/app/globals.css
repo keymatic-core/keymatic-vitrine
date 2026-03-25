@@ -81,6 +81,59 @@ body {
   border-color: rgba(255, 255, 255, 0.12);
 }
 
+/* ─── Dropdown Icon Gradient Border ───────────────────────── */
+.dropdown-icon-gradient {
+  position: relative;
+  border: 1px solid transparent !important;
+}
+
+.dropdown-icon-gradient::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, #f97316 0%, #ec4899 50%, #a855f7 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+
+.group:hover .dropdown-icon-gradient::before {
+  opacity: 1;
+}
+
+/* ─── Gradient Border Hover (light/universal) ────────────── */
+.gradient-border-hover {
+  position: relative;
+  border: 1px solid transparent;
+  transition: transform 0.2s ease;
+}
+
+.gradient-border-hover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: linear-gradient(135deg, rgba(249, 115, 22, 0.4), rgba(168, 85, 247, 0.4));
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: xor;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.gradient-border-hover:hover::before {
+  opacity: 1;
+}
+
 /* ─── Card with Gradient Border (Raycast-style) ───────────── */
 .card-gradient-border {
   position: relative;
@@ -95,8 +148,8 @@ body {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(135deg, rgba(249, 115, 22, 0.3), rgba(168, 85, 247, 0.3));
+  padding: 1.5px;
+  background: linear-gradient(135deg, rgba(249, 115, 22, 0.4), rgba(168, 85, 247, 0.4));
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask-composite: exclude;
   -webkit-mask-composite: xor;
@@ -189,11 +242,24 @@ body {
   background-size: 80px 80px;
 }
 
+.bg-grid-subtle-light {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
 /* ─── Scrollbar ───────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #09090b; }
-::-webkit-scrollbar-thumb { background: #27272a; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #3f3f46; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #52525b; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #71717a; }
+
+/* Firefox */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #52525b transparent;
+}
 
 /* ─── FAQ Gradient Border (light section) ────────────────── */
 .faq-item {
@@ -225,4 +291,111 @@ body {
 .divider {
   height: 1px;
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
+}
+
+/* ─── E-commerce Page — Orange Identity Cards ─────────────── */
+.ecom-card-border {
+  position: relative;
+  background: #18181b;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  transition: transform 0.2s ease;
+}
+
+.ecom-card-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(249, 115, 22, 0.35), rgba(245, 158, 11, 0.2));
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: xor;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.ecom-card-border:hover::before {
+  opacity: 1;
+}
+
+.ecom-card-border:hover {
+  transform: translateY(-2px);
+}
+
+/* ─── Infinite Scroll Slider ─────────────────────────────── */
+@keyframes infinite-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-100% / 3));
+  }
+}
+
+.animate-infinite-scroll {
+  animation: infinite-scroll 25s linear infinite;
+  width: max-content;
+}
+
+/* ─── Quiz CTA Button — Rotating Glow Border ────────────── */
+@property --quiz-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes quiz-rotate {
+  to { --quiz-angle: 360deg; }
+}
+
+.quiz-cta-btn {
+  position: relative;
+  z-index: 1;
+  border-radius: 12px;
+}
+
+/* Borda interna com gradiente rotativo */
+.quiz-cta-btn::before {
+  content: '';
+  position: absolute;
+  inset: -1.5px;
+  border-radius: 13px;
+  padding: 1.5px;
+  background: conic-gradient(
+    from var(--quiz-angle),
+    #f97316,
+    #ec4899,
+    #a855f7,
+    #3b82f6,
+    #22c55e,
+    #f97316
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  animation: quiz-rotate 3s linear infinite;
+}
+
+/* Glow difuso externo acompanhando a rotação */
+.quiz-cta-btn::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 16px;
+  background: conic-gradient(
+    from var(--quiz-angle),
+    transparent 25%,
+    rgba(249, 115, 22, 0.35) 37%,
+    rgba(168, 85, 247, 0.3) 50%,
+    transparent 75%
+  );
+  filter: blur(10px);
+  pointer-events: none;
+  animation: quiz-rotate 3s linear infinite;
+  z-index: -1;
 }

@@ -1,15 +1,21 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { getWhatsAppUrl } from "../lib/utils";
 
-/* ─── Wireframe Gear Cube ─────────────────────────────────── */
+/* ─── Wireframe Cube with Key Unlock ──────────────────────── */
 function FloatingCube() {
   const containerRef = useRef<HTMLDivElement>(null);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
+  const [phase, setPhase] = useState(0);
+  // 0 = initial (static, keyhole visible)
+  // 1 = key sliding in
+  // 2 = key turning (unlocking)
+  // 3 = circuit burst (rings light up)
+  // 4 = idle (gentle float + glow)
 
   const rotateX = useSpring(useTransform(mouseY, [-300, 300], [15, -15]), {
     stiffness: 100,
@@ -31,6 +37,19 @@ function FloatingCube() {
     mouseX.set(0);
     mouseY.set(0);
   }
+
+  useEffect(() => {
+    const timers = [
+      setTimeout(() => setPhase(1), 800),
+      setTimeout(() => setPhase(2), 2100),
+      setTimeout(() => setPhase(3), 2450),
+      setTimeout(() => setPhase(4), 4500),
+    ];
+    return () => timers.forEach(clearTimeout);
+  }, []);
+
+  const isIdle = phase >= 4;
+  const isUnlocked = phase >= 3;
 
   return (
     <div
@@ -59,51 +78,274 @@ function FloatingCube() {
         whileHover={{ scale: 1.03 }}
         transition={{ type: "spring", stiffness: 200, damping: 20 }}
       >
-        {/* Slow rotation wrapper */}
+        {/* Idle floating — starts after unlock */}
         <motion.div
-          animate={{ rotate: [0, 360] }}
-          transition={{ rotate: { duration: 40, repeat: Infinity, ease: "linear" } }}
+          animate={isIdle ? { y: [0, -6, 0] } : {}}
+          transition={isIdle ? { duration: 4, repeat: Infinity, ease: "easeInOut" } : {}}
           className="relative w-full h-full flex items-center justify-center"
         >
           {/* Outer wireframe ring */}
-          <div
+          <motion.div
             className="absolute w-56 h-56 lg:w-64 lg:h-64 rounded-[28px] border border-white/[0.05]"
             style={{ boxShadow: "inset 0 0 40px rgba(255,255,255,0.01)" }}
+            animate={
+              isUnlocked
+                ? {
+                    borderColor: isIdle
+                      ? ["rgba(255,255,255,0.05)", "rgba(255,255,255,0.1)", "rgba(255,255,255,0.05)"]
+                      : ["rgba(255,255,255,0.05)", "rgba(255,255,255,0.25)", "rgba(255,255,255,0.1)"],
+                    boxShadow: isIdle
+                      ? [
+                          "inset 0 0 40px rgba(255,255,255,0.01), 0 0 0px transparent",
+                          "inset 0 0 40px rgba(255,255,255,0.03), 0 0 10px rgba(255,255,255,0.04)",
+                          "inset 0 0 40px rgba(255,255,255,0.01), 0 0 0px transparent",
+                        ]
+                      : [
+                          "inset 0 0 40px rgba(255,255,255,0.01), 0 0 0px transparent",
+                          "inset 0 0 40px rgba(255,255,255,0.06), 0 0 20px rgba(255,255,255,0.08)",
+                          "inset 0 0 40px rgba(255,255,255,0.03), 0 0 10px rgba(255,255,255,0.04)",
+                        ],
+                  }
+                : {}
+            }
+            transition={
+              isIdle
+                ? { duration: 3, repeat: Infinity, ease: "easeInOut" }
+                : { duration: 0.8 }
+            }
           />
 
           {/* Mid wireframe ring */}
-          <div
+          <motion.div
             className="absolute w-44 h-44 lg:w-52 lg:h-52 rounded-[22px] border border-white/[0.07] rotate-12"
             style={{
               background:
                 "linear-gradient(135deg, rgba(249,115,22,0.03) 0%, transparent 50%, rgba(168,85,247,0.03) 100%)",
             }}
+            animate={
+              isUnlocked
+                ? {
+                    borderColor: isIdle
+                      ? ["rgba(255,255,255,0.07)", "rgba(255,255,255,0.14)", "rgba(255,255,255,0.07)"]
+                      : ["rgba(255,255,255,0.07)", "rgba(255,255,255,0.3)", "rgba(255,255,255,0.14)"],
+                  }
+                : {}
+            }
+            transition={
+              isIdle
+                ? { duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.3 }
+                : { duration: 0.8, delay: 0.1 }
+            }
           />
 
           {/* Inner wireframe ring */}
-          <div className="absolute w-32 h-32 lg:w-40 lg:h-40 rounded-2xl border border-white/[0.09] -rotate-6" />
+          <motion.div
+            className="absolute w-32 h-32 lg:w-40 lg:h-40 rounded-2xl border border-white/[0.09] -rotate-6"
+            animate={
+              isUnlocked
+                ? {
+                    borderColor: isIdle
+                      ? ["rgba(255,255,255,0.09)", "rgba(255,255,255,0.18)", "rgba(255,255,255,0.09)"]
+                      : ["rgba(255,255,255,0.09)", "rgba(255,255,255,0.35)", "rgba(255,255,255,0.18)"],
+                  }
+                : {}
+            }
+            transition={
+              isIdle
+                ? { duration: 2.8, repeat: Infinity, ease: "easeInOut", delay: 0.6 }
+                : { duration: 0.8, delay: 0.2 }
+            }
+          />
 
-          {/* Glowing Core */}
-          <div className="relative">
-            <div
-              className="w-16 h-16 lg:w-20 lg:h-20 rounded-xl gradient-brand opacity-80"
-              style={{
-                boxShadow:
-                  "0 0 30px rgba(249,115,22,0.2), 0 0 60px rgba(168,85,247,0.15), 0 0 100px rgba(249,115,22,0.05)",
-              }}
+          {/* Glowing Core — "portal" that opens */}
+          <motion.div
+            className="relative"
+            style={{ perspective: 600 }}
+            animate={
+              isUnlocked
+                ? { scale: isIdle ? [1.08, 1.12, 1.08] : [1, 1.1] }
+                : { scale: 1 }
+            }
+            transition={
+              isIdle
+                ? { duration: 3, repeat: Infinity, ease: "easeInOut" }
+                : { duration: 0.6, ease: "easeOut" }
+            }
+          >
+            <motion.div
+              className="w-16 h-16 lg:w-20 lg:h-20 rounded-xl gradient-brand"
+              animate={
+                isUnlocked
+                  ? {
+                      opacity: isIdle ? [0.85, 0.95, 0.85] : [0.8, 1],
+                      boxShadow: isIdle
+                        ? [
+                            "0 0 40px rgba(249,115,22,0.3), 0 0 80px rgba(168,85,247,0.2), 0 0 120px rgba(249,115,22,0.08)",
+                            "0 0 50px rgba(249,115,22,0.4), 0 0 100px rgba(168,85,247,0.25), 0 0 140px rgba(249,115,22,0.12)",
+                            "0 0 40px rgba(249,115,22,0.3), 0 0 80px rgba(168,85,247,0.2), 0 0 120px rgba(249,115,22,0.08)",
+                          ]
+                        : [
+                            "0 0 30px rgba(249,115,22,0.2), 0 0 60px rgba(168,85,247,0.15), 0 0 100px rgba(249,115,22,0.05)",
+                            "0 0 60px rgba(249,115,22,0.5), 0 0 100px rgba(168,85,247,0.35), 0 0 160px rgba(249,115,22,0.15)",
+                          ],
+                    }
+                  : {
+                      opacity: 0.8,
+                      boxShadow: "0 0 30px rgba(249,115,22,0.2), 0 0 60px rgba(168,85,247,0.15), 0 0 100px rgba(249,115,22,0.05)",
+                    }
+              }
+              transition={
+                isIdle
+                  ? { duration: 3, repeat: Infinity, ease: "easeInOut" }
+                  : { duration: 0.8 }
+              }
             />
             {/* Core inner reflection */}
             <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-white/20 via-transparent to-transparent" />
-          </div>
+
+            {/* ── Keyhole (matches key teeth shape — always visible) ── */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <svg width="22" height="16" viewBox="0 0 22 16" fill="none" className="lg:w-[28px] lg:h-[20px]">
+                <defs>
+                  <filter id="keyhole-depth">
+                    <feDropShadow dx="0" dy="0.8" stdDeviation="0.8" floodColor="#000" floodOpacity="0.6" />
+                  </filter>
+                </defs>
+                {/* Outer shadow (depth) */}
+                <rect x="0.5" y="3.5" width="7" height="4" rx="1.2" fill="rgba(0,0,0,0.3)" />
+                <rect x="0.5" y="8.5" width="11" height="4" rx="1.2" fill="rgba(0,0,0,0.3)" />
+                <rect x="7.5" y="3.5" width="5" height="4" rx="1.2" fill="rgba(0,0,0,0.25)" />
+                {/* Main keyhole cutout — matches key teeth silhouette */}
+                <g filter="url(#keyhole-depth)">
+                  <rect x="0" y="3" width="7" height="4" rx="1" fill="rgba(0,0,0,0.6)" />
+                  <rect x="0" y="8" width="11" height="4" rx="1" fill="rgba(0,0,0,0.6)" />
+                  <rect x="7" y="3" width="5" height="4" rx="1" fill="rgba(0,0,0,0.5)" />
+                </g>
+                {/* Inner depth */}
+                <rect x="0.8" y="3.8" width="5.5" height="2.5" rx="0.5" fill="rgba(0,0,0,0.35)" />
+                <rect x="0.8" y="8.8" width="9.5" height="2.5" rx="0.5" fill="rgba(0,0,0,0.35)" />
+                {/* Subtle rim highlight */}
+                <rect x="0" y="3" width="7" height="0.5" rx="0.25" fill="rgba(255,255,255,0.06)" />
+                <rect x="0" y="8" width="11" height="0.5" rx="0.25" fill="rgba(255,255,255,0.06)" />
+              </svg>
+            </div>
+
+            {/* ── Key (white — slides in from left, teeth enter keyhole, barrel roll) ── */}
+            <motion.div
+              className="absolute inset-0 flex items-center justify-center pointer-events-none"
+              style={{ zIndex: 10, backfaceVisibility: "hidden" }}
+              initial={{ x: -140, opacity: 0, scale: 0.9 }}
+              animate={
+                phase === 0
+                  ? { x: -140, opacity: 0, scale: 0.9 }
+                  : phase === 1
+                    ? { x: 4, opacity: 1, scale: 1, rotateX: 0 }
+                    : { x: 4, opacity: 1, scale: 1, rotateX: 360 }
+              }
+              transition={{
+                x: { duration: 1.3, ease: [0.25, 0.1, 0.25, 1] },
+                scale: { duration: 1.3, ease: [0.25, 0.1, 0.25, 1] },
+                rotateX: { duration: 0.8, ease: [0.4, 0, 0.2, 1] },
+                opacity: { duration: 0.6 },
+              }}
+            >
+              <svg width="36" height="26" viewBox="0 0 32 24" fill="none" className="lg:w-[44px] lg:h-[32px]">
+                <defs>
+                  <clipPath id="key-clip">
+                    <motion.rect
+                      x="0" y="0" height="24"
+                      initial={{ width: 32 }}
+                      animate={phase >= 1 ? { width: 15 } : { width: 32 }}
+                      transition={{ duration: 0.4, delay: 0.8 }}
+                    />
+                  </clipPath>
+                  <linearGradient id="key-brand" x1="0" y1="4" x2="26" y2="20" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stopColor="#ffffff" />
+                    <stop offset="50%" stopColor="#f0f0f2" />
+                    <stop offset="100%" stopColor="#e4e4e7" />
+                  </linearGradient>
+                  <linearGradient id="key-brand-dark" x1="0" y1="4" x2="26" y2="20" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stopColor="#a1a1aa" />
+                    <stop offset="100%" stopColor="#71717a" />
+                  </linearGradient>
+                  <linearGradient id="key-ring-grad" x1="5.5" y1="10.5" x2="8.5" y2="13.5" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stopColor="#f97316" />
+                    <stop offset="50%" stopColor="#ec4899" />
+                    <stop offset="100%" stopColor="#a855f7" />
+                  </linearGradient>
+                  <filter id="key-shadow">
+                    <feDropShadow dx="0" dy="1" stdDeviation="1.5" floodColor="#000" floodOpacity="0.35" />
+                  </filter>
+                </defs>
+                <g clipPath="url(#key-clip)">
+                  {/* Key body shadow (subtle depth) */}
+                  <rect x="0.5" y="5" width="14" height="16" rx="4" fill="rgba(0,0,0,0.2)" />
+                  <rect x="14.5" y="9" width="6" height="3" rx="1" fill="rgba(0,0,0,0.15)" />
+                  <rect x="14.5" y="14" width="10" height="3" rx="1" fill="rgba(0,0,0,0.15)" />
+                  {/* Key body */}
+                  <g filter="url(#key-shadow)">
+                    <rect x="0" y="4" width="14" height="16" rx="4" fill="url(#key-brand)" />
+                    <rect x="14" y="8" width="6" height="3" rx="1" fill="url(#key-brand)" />
+                    <rect x="14" y="13" width="10" height="3" rx="1" fill="url(#key-brand)" />
+                    <rect x="20" y="8" width="4" height="3" rx="1" fill="url(#key-brand)" opacity="0.7" />
+                  </g>
+                  {/* Top bevel (subtle 3D) */}
+                  <rect x="1" y="4.5" width="12" height="1.5" rx="1" fill="white" opacity="0.4" />
+                  <rect x="14.5" y="8.2" width="5" height="0.7" rx="0.4" fill="white" opacity="0.25" />
+                  <rect x="14.5" y="13.2" width="9" height="0.7" rx="0.4" fill="white" opacity="0.25" />
+                  {/* Bottom edge */}
+                  <rect x="0" y="17.5" width="14" height="2" rx="1" fill="url(#key-brand-dark)" opacity="0.3" />
+                  <rect x="14" y="10.3" width="6" height="0.7" rx="0.4" fill="url(#key-brand-dark)" opacity="0.2" />
+                  <rect x="14" y="15.3" width="10" height="0.7" rx="0.4" fill="url(#key-brand-dark)" opacity="0.2" />
+                  {/* Key ring */}
+                  <circle cx="7" cy="12" r="3" fill="#09090b" opacity="0.25" />
+                  <circle cx="7" cy="12" r="1.5" fill="url(#key-ring-grad)" opacity="0.9" />
+                </g>
+              </svg>
+            </motion.div>
+          </motion.div>
 
           {/* Cross lines (wireframe detail) */}
           <div className="absolute w-px h-56 lg:h-64 bg-gradient-to-b from-transparent via-white/[0.04] to-transparent" />
           <div className="absolute w-56 lg:w-64 h-px bg-gradient-to-r from-transparent via-white/[0.04] to-transparent" />
           <div className="absolute w-px h-44 lg:h-52 bg-gradient-to-b from-transparent via-white/[0.03] to-transparent rotate-45" />
           <div className="absolute w-px h-44 lg:h-52 bg-gradient-to-b from-transparent via-white/[0.03] to-transparent -rotate-45" />
+
+          {/* ── Burst flash on unlock — white intense light ── */}
+          <motion.div
+            className="absolute rounded-full pointer-events-none"
+            style={{
+              width: 100,
+              height: 100,
+              background: "radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.7) 25%, rgba(255,255,255,0.3) 50%, transparent 70%)",
+            }}
+            initial={{ opacity: 0, scale: 0.2 }}
+            animate={
+              phase === 3
+                ? { opacity: [0, 1, 0], scale: [0.2, 4] }
+                : {}
+            }
+            transition={{ duration: 0.9, ease: "easeOut" }}
+          />
+          {/* Secondary glow — slower white bloom */}
+          <motion.div
+            className="absolute rounded-full pointer-events-none"
+            style={{
+              width: 60,
+              height: 60,
+              background: "radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,255,255,0.5) 40%, transparent 70%)",
+            }}
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={
+              phase === 3
+                ? { opacity: [0, 0.9, 0], scale: [0.5, 2.5] }
+                : {}
+            }
+            transition={{ duration: 1.2, ease: "easeOut", delay: 0.05 }}
+          />
         </motion.div>
 
-        {/* Orbiting particles — outside rotation so they orbit independently */}
+        {/* Orbiting particles — outside floating so they stay in place */}
         {[...Array(8)].map((_, i) => {
           const angle = (i / 8) * 360;
           const radius = 42 + (i % 3) * 8;
@@ -173,8 +415,8 @@ export default function HeroSection() {
               className="text-5xl sm:text-6xl lg:text-7xl font-semibold leading-[1.08] tracking-[-0.02em] text-white mb-6"
             >
               Tecnologia que{" "}
-              <span className="gradient-brand-text">funciona</span> enquanto
-              você dorme.
+              <span className="gradient-brand-text">funciona mesmo</span>{" "}
+              enquanto você dorme.
             </motion.h1>
 
             {/* Subtitle */}

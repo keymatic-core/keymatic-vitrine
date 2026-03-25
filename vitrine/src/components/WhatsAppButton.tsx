@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageCircle, X } from "lucide-react";
+import { X } from "lucide-react";
+import WhatsAppIcon from "./icons/WhatsAppIcon";
 import { getWhatsAppUrl } from "../lib/utils";
 
 export default function WhatsAppButton() {
@@ -58,7 +59,7 @@ export default function WhatsAppButton() {
         className="w-14 h-14 rounded-full bg-[#25D366] hover:bg-[#20BD5A] flex items-center justify-center text-white shadow-lg shadow-[#25D366]/20 transition-colors duration-200"
         aria-label="Abrir WhatsApp"
       >
-        <MessageCircle size={24} />
+        <WhatsAppIcon size={24} />
       </motion.a>
     </div>
   );

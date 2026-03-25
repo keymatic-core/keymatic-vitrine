@@ -13,6 +13,7 @@ import FAQ from "../components/FAQ";
 import Footer from "../components/Footer";
 import WhatsAppButton from "../components/WhatsAppButton";
 import CookieBanner from "../components/CookieBanner";
+import QuizSection from "../components/QuizSection";
 
 export default function Home() {
   return (
@@ -27,6 +28,7 @@ export default function Home() {
         <SolutionsShowcase />
         <HowItWorks />
         <CasesResults />
+        <QuizSection />
         <TechDifferentials />
         <AIConsulting />
         <InteractiveTriage />

@@ -36,7 +36,7 @@ export default function PoliticaDePrivacidade() {
             Política de Privacidade
           </h1>
           <p className="text-zinc-500 text-sm">
-            Última atualização: 10 de março de 2026
+            Última atualização: março de 2025
           </p>
         </div>
 
@@ -47,11 +47,12 @@ export default function PoliticaDePrivacidade() {
               1. Introdução
             </h2>
             <p className="text-sm text-zinc-400 leading-relaxed">
-              A <strong className="text-zinc-300">Keymatic</strong>, marca de tecnologia da VTS Comércio e Serviços LTDA, inscrita no
-              CNPJ sob o n.º 03.477.617/0001-90, com sede na Rua Dr. Aureliano da Silva Arruda, 625, São Mateus, São Paulo — SP, CEP 03960-050, é a controladora dos dados pessoais
-              coletados neste site. Esta Política de Privacidade descreve como coletamos, usamos,
+              A <strong className="text-zinc-300">Keymatic</strong>, marca operada por VTS Comércio e Serviços LTDA (nome fantasia: VTS Tecnologia), inscrita no
+              CNPJ sob o n.º 03.477.617/0001-90, com sede na Rua Dr. Aureliano da Silva Arruda, 625, São Paulo — SP, CEP 03960-050, é a controladora dos dados pessoais
+              coletados neste site e por meio dos seus serviços de automação e atendimento via WhatsApp. Esta Política de Privacidade descreve como coletamos, usamos,
               armazenamos e protegemos suas informações pessoais, em conformidade com a{" "}
-              <strong className="text-zinc-300">Lei Geral de Proteção de Dados (LGPD — Lei n.º 13.709/2018)</strong>.
+              <strong className="text-zinc-300">Lei Geral de Proteção de Dados (LGPD — Lei n.º 13.709/2018)</strong> e com as políticas
+              da <strong className="text-zinc-300">Meta Platforms, Inc.</strong> para uso da WhatsApp Business API.
             </p>
           </section>
 
@@ -63,6 +64,8 @@ export default function PoliticaDePrivacidade() {
             <p className="text-sm text-zinc-400 leading-relaxed mb-3">
               Podemos coletar os seguintes dados pessoais:
             </p>
+
+            <h3 className="text-[14px] font-semibold text-zinc-300 mb-2 mt-4">2.1. Dados coletados pelo site</h3>
             <ul className="space-y-2">
               <li className="flex items-start gap-2 text-sm text-zinc-400">
                 <span className="w-1 h-1 rounded-full bg-brand-orange mt-2 shrink-0" />
@@ -74,7 +77,34 @@ export default function PoliticaDePrivacidade() {
               </li>
               <li className="flex items-start gap-2 text-sm text-zinc-400">
                 <span className="w-1 h-1 rounded-full bg-brand-orange mt-2 shrink-0" />
-                <span><strong className="text-zinc-300">Dados do formulário de diagnóstico:</strong> desafio selecionado, tamanho da operação, informações de contato.</span>
+                <span><strong className="text-zinc-300">Dados do formulário de diagnóstico/quiz:</strong> desafio selecionado, tamanho da operação, perfil digital, informações de contato.</span>
+              </li>
+            </ul>
+
+            <h3 className="text-[14px] font-semibold text-zinc-300 mb-2 mt-5">2.2. Dados coletados via WhatsApp Business API</h3>
+            <p className="text-sm text-zinc-400 leading-relaxed mb-3">
+              Quando você interage com nossos serviços de atendimento via WhatsApp (operados pela Keymatic em nome de nossos clientes), podemos coletar:
+            </p>
+            <ul className="space-y-2">
+              <li className="flex items-start gap-2 text-sm text-zinc-400">
+                <span className="w-1 h-1 rounded-full bg-brand-orange mt-2 shrink-0" />
+                <span><strong className="text-zinc-300">Nome do contato:</strong> conforme cadastrado no perfil do WhatsApp.</span>
+              </li>
+              <li className="flex items-start gap-2 text-sm text-zinc-400">
+                <span className="w-1 h-1 rounded-full bg-brand-orange mt-2 shrink-0" />
+                <span><strong className="text-zinc-300">Número de telefone WhatsApp.</strong></span>
+              </li>
+              <li className="flex items-start gap-2 text-sm text-zinc-400">
+                <span className="w-1 h-1 rounded-full bg-brand-orange mt-2 shrink-0" />
+                <span><strong className="text-zinc-300">Conteúdo das mensagens:</strong> mensagens trocadas durante o atendimento automatizado e humano.</span>
+              </li>
+              <li className="flex items-start gap-2 text-sm text-zinc-400">
+                <span className="w-1 h-1 rounded-full bg-brand-orange mt-2 shrink-0" />
+                <span><strong className="text-zinc-300">Histórico de conversas:</strong> registros de interações para continuidade do atendimento.</span>
+              </li>
+              <li className="flex items-start gap-2 text-sm text-zinc-400">
+                <span className="w-1 h-1 rounded-full bg-brand-orange mt-2 shrink-0" />
+                <span><strong className="text-zinc-300">Dados de leads:</strong> nome, interesse demonstrado e status de atendimento.</span>
               </li>
             </ul>
           </section>
@@ -82,7 +112,36 @@ export default function PoliticaDePrivacidade() {
           {/* 3 */}
           <section>
             <h2 className="text-lg font-semibold text-zinc-200 mb-3">
-              3. Finalidade do Tratamento
+              3. Uso de Mensagens Automatizadas e Inteligência Artificial
+            </h2>
+            <p className="text-sm text-zinc-400 leading-relaxed mb-3">
+              A Keymatic utiliza <strong className="text-zinc-300">inteligência artificial (IA)</strong> e <strong className="text-zinc-300">mensagens automatizadas</strong> para
+              atendimento via WhatsApp em nome de seus clientes (empresas contratantes). Isso significa que:
+            </p>
+            <ul className="space-y-2">
+              <li className="flex items-start gap-2 text-sm text-zinc-400">
+                <span className="w-1 h-1 rounded-full bg-brand-purple mt-2 shrink-0" />
+                As respostas no WhatsApp podem ser geradas automaticamente por modelos de linguagem (LLM).
+              </li>
+              <li className="flex items-start gap-2 text-sm text-zinc-400">
+                <span className="w-1 h-1 rounded-full bg-brand-purple mt-2 shrink-0" />
+                O conteúdo das mensagens pode ser processado por provedores de IA (Google Gemini, Groq) exclusivamente para geração de respostas, sem vinculação a dados pessoais identificáveis.
+              </li>
+              <li className="flex items-start gap-2 text-sm text-zinc-400">
+                <span className="w-1 h-1 rounded-full bg-brand-purple mt-2 shrink-0" />
+                A IA não toma decisões autônomas que afetem direitos do titular; é utilizada apenas como ferramenta de apoio ao atendimento.
+              </li>
+              <li className="flex items-start gap-2 text-sm text-zinc-400">
+                <span className="w-1 h-1 rounded-full bg-brand-purple mt-2 shrink-0" />
+                O usuário pode solicitar atendimento humano a qualquer momento durante a conversa.
+              </li>
+            </ul>
+          </section>
+
+          {/* 4 */}
+          <section>
+            <h2 className="text-lg font-semibold text-zinc-200 mb-3">
+              4. Finalidade do Tratamento
             </h2>
             <p className="text-sm text-zinc-400 leading-relaxed mb-3">
               Seus dados pessoais são tratados para as seguintes finalidades:
@@ -91,6 +150,10 @@ export default function PoliticaDePrivacidade() {
               <li className="flex items-start gap-2 text-sm text-zinc-400">
                 <span className="w-1 h-1 rounded-full bg-brand-purple mt-2 shrink-0" />
                 Responder a solicitações de contato e diagnóstico gratuito.
+              </li>
+              <li className="flex items-start gap-2 text-sm text-zinc-400">
+                <span className="w-1 h-1 rounded-full bg-brand-purple mt-2 shrink-0" />
+                Prestar serviços de atendimento automatizado via WhatsApp em nome de empresas contratantes.
               </li>
               <li className="flex items-start gap-2 text-sm text-zinc-400">
                 <span className="w-1 h-1 rounded-full bg-brand-purple mt-2 shrink-0" />
@@ -111,10 +174,10 @@ export default function PoliticaDePrivacidade() {
             </ul>
           </section>
 
-          {/* 4 */}
+          {/* 5 */}
           <section>
             <h2 className="text-lg font-semibold text-zinc-200 mb-3">
-              4. Base Legal (Art. 7º da LGPD)
+              5. Base Legal (Art. 7º da LGPD)
             </h2>
             <p className="text-sm text-zinc-400 leading-relaxed mb-3">
               O tratamento de dados pessoais realizado pela Keymatic tem como bases legais:
@@ -126,7 +189,7 @@ export default function PoliticaDePrivacidade() {
               </li>
               <li className="flex items-start gap-2 text-sm text-zinc-400">
                 <span className="w-1 h-1 rounded-full bg-zinc-600 mt-2 shrink-0" />
-                <span><strong className="text-zinc-300">Execução de contrato</strong> (Art. 7º, V): para prestação dos serviços contratados.</span>
+                <span><strong className="text-zinc-300">Execução de contrato</strong> (Art. 7º, V): para prestação dos serviços contratados, incluindo automação de atendimento via WhatsApp.</span>
               </li>
               <li className="flex items-start gap-2 text-sm text-zinc-400">
                 <span className="w-1 h-1 rounded-full bg-zinc-600 mt-2 shrink-0" />
@@ -135,10 +198,10 @@ export default function PoliticaDePrivacidade() {
             </ul>
           </section>
 
-          {/* 5 */}
+          {/* 6 */}
           <section>
             <h2 className="text-lg font-semibold text-zinc-200 mb-3">
-              5. Compartilhamento de Dados
+              6. Compartilhamento de Dados
             </h2>
             <p className="text-sm text-zinc-400 leading-relaxed mb-3">
               Seus dados pessoais poderão ser compartilhados com:
@@ -146,7 +209,19 @@ export default function PoliticaDePrivacidade() {
             <ul className="space-y-2">
               <li className="flex items-start gap-2 text-sm text-zinc-400">
                 <span className="w-1 h-1 rounded-full bg-zinc-600 mt-2 shrink-0" />
-                <span><strong className="text-zinc-300">Provedores de infraestrutura:</strong> serviços de hospedagem, banco de dados e CDN para funcionamento do site.</span>
+                <span><strong className="text-zinc-300">Empresa contratante:</strong> a empresa cliente da Keymatic com a qual o usuário final está interagindo via WhatsApp, para fins de atendimento e continuidade do serviço.</span>
+              </li>
+              <li className="flex items-start gap-2 text-sm text-zinc-400">
+                <span className="w-1 h-1 rounded-full bg-zinc-600 mt-2 shrink-0" />
+                <span><strong className="text-zinc-300">Provedores de IA:</strong> Google Gemini e Groq, que recebem apenas o conteúdo textual das mensagens para processamento de linguagem natural, sem dados pessoais identificáveis vinculados.</span>
+              </li>
+              <li className="flex items-start gap-2 text-sm text-zinc-400">
+                <span className="w-1 h-1 rounded-full bg-zinc-600 mt-2 shrink-0" />
+                <span><strong className="text-zinc-300">Meta Platforms (WhatsApp Business API):</strong> para envio e recebimento de mensagens via WhatsApp, conforme os Termos de Serviço e Política de Privacidade da Meta.</span>
+              </li>
+              <li className="flex items-start gap-2 text-sm text-zinc-400">
+                <span className="w-1 h-1 rounded-full bg-zinc-600 mt-2 shrink-0" />
+                <span><strong className="text-zinc-300">Provedores de infraestrutura:</strong> serviços de hospedagem, banco de dados (PostgreSQL) e CDN para funcionamento do site e dos serviços.</span>
               </li>
               <li className="flex items-start gap-2 text-sm text-zinc-400">
                 <span className="w-1 h-1 rounded-full bg-zinc-600 mt-2 shrink-0" />
@@ -162,10 +237,10 @@ export default function PoliticaDePrivacidade() {
             </p>
           </section>
 
-          {/* 6 */}
+          {/* 7 */}
           <section>
             <h2 className="text-lg font-semibold text-zinc-200 mb-3">
-              6. Cookies
+              7. Cookies
             </h2>
             <p className="text-sm text-zinc-400 leading-relaxed mb-3">
               Utilizamos cookies para melhorar a experiência de navegação. Os tipos de cookies utilizados são:
@@ -192,10 +267,10 @@ export default function PoliticaDePrivacidade() {
             </div>
           </section>
 
-          {/* 7 */}
+          {/* 8 */}
           <section>
             <h2 className="text-lg font-semibold text-zinc-200 mb-3">
-              7. Seus Direitos (Art. 18 da LGPD)
+              8. Seus Direitos (Art. 18 da LGPD)
             </h2>
             <p className="text-sm text-zinc-400 leading-relaxed mb-3">
               Como titular dos dados, você tem os seguintes direitos:
@@ -225,19 +300,24 @@ export default function PoliticaDePrivacidade() {
                 <span className="w-1 h-1 rounded-full bg-brand-orange mt-2 shrink-0" />
                 Obter informações sobre compartilhamento de dados com terceiros.
               </li>
+              <li className="flex items-start gap-2 text-sm text-zinc-400">
+                <span className="w-1 h-1 rounded-full bg-brand-orange mt-2 shrink-0" />
+                <strong className="text-zinc-300">Solicitar a exclusão dos seus dados pessoais</strong> de nossas bases, incluindo dados coletados via WhatsApp, a qualquer momento.
+              </li>
             </ul>
             <p className="text-sm text-zinc-400 leading-relaxed mt-3">
               Para exercer seus direitos, entre em contato pelo e-mail{" "}
-              <a href="mailto:contato@keymatic.com.br" className="text-zinc-200 hover:underline">
-                contato@keymatic.com.br
+              <a href="mailto:privacidade@keymatic.com.br" className="text-zinc-200 hover:underline">
+                privacidade@keymatic.com.br
               </a>.
+              Responderemos à sua solicitação em até 15 dias úteis, conforme previsto na LGPD.
             </p>
           </section>
 
-          {/* 8 */}
+          {/* 9 */}
           <section>
             <h2 className="text-lg font-semibold text-zinc-200 mb-3">
-              8. Segurança dos Dados
+              9. Segurança dos Dados
             </h2>
             <p className="text-sm text-zinc-400 leading-relaxed">
               Adotamos medidas técnicas e organizacionais adequadas para proteger seus dados pessoais contra acessos
@@ -247,6 +327,10 @@ export default function PoliticaDePrivacidade() {
               <li className="flex items-start gap-2 text-sm text-zinc-400">
                 <span className="w-1 h-1 rounded-full bg-zinc-600 mt-2 shrink-0" />
                 Criptografia de dados em trânsito (HTTPS/TLS) e em repouso.
+              </li>
+              <li className="flex items-start gap-2 text-sm text-zinc-400">
+                <span className="w-1 h-1 rounded-full bg-zinc-600 mt-2 shrink-0" />
+                Armazenamento seguro em banco de dados PostgreSQL em servidor próprio.
               </li>
               <li className="flex items-start gap-2 text-sm text-zinc-400">
                 <span className="w-1 h-1 rounded-full bg-zinc-600 mt-2 shrink-0" />
@@ -263,22 +347,24 @@ export default function PoliticaDePrivacidade() {
             </ul>
           </section>
 
-          {/* 9 */}
+          {/* 10 */}
           <section>
             <h2 className="text-lg font-semibold text-zinc-200 mb-3">
-              9. Retenção de Dados
+              10. Retenção de Dados
             </h2>
             <p className="text-sm text-zinc-400 leading-relaxed">
               Seus dados pessoais serão mantidos apenas pelo tempo necessário para cumprir as finalidades
               descritas nesta política, ou conforme exigido por lei. Dados de contato comercial são mantidos
-              por até 24 meses após a última interação. Após esse período, os dados são anonimizados ou eliminados.
+              por até 24 meses após a última interação. Dados de conversas via WhatsApp são mantidos enquanto
+              houver relação contratual ativa com a empresa atendida, sendo eliminados em até 90 dias após o
+              encerramento do contrato. Após os períodos de retenção, os dados são anonimizados ou eliminados.
             </p>
           </section>
 
-          {/* 10 */}
+          {/* 11 */}
           <section>
             <h2 className="text-lg font-semibold text-zinc-200 mb-3">
-              10. Alterações nesta Política
+              11. Alterações nesta Política
             </h2>
             <p className="text-sm text-zinc-400 leading-relaxed">
               Esta Política de Privacidade pode ser atualizada periodicamente. Eventuais alterações
@@ -287,10 +373,10 @@ export default function PoliticaDePrivacidade() {
             </p>
           </section>
 
-          {/* 11 */}
+          {/* 12 */}
           <section>
             <h2 className="text-lg font-semibold text-zinc-200 mb-3">
-              11. Contato e Encarregado (DPO)
+              12. Contato e Encarregado (DPO)
             </h2>
             <p className="text-sm text-zinc-400 leading-relaxed mb-3">
               Para dúvidas, solicitações ou reclamações relacionadas ao tratamento de dados pessoais,
@@ -300,11 +386,17 @@ export default function PoliticaDePrivacidade() {
               <p className="text-sm text-zinc-300 font-medium mb-2">Keymatic — Encarregado de Dados</p>
               <p className="text-[13px] text-zinc-500">
                 E-mail:{" "}
-                <a href="mailto:contato@keymatic.com.br" className="text-zinc-300 hover:underline">
-                  contato@keymatic.com.br
+                <a href="mailto:privacidade@keymatic.com.br" className="text-zinc-300 hover:underline">
+                  privacidade@keymatic.com.br
                 </a>
               </p>
               <p className="text-[13px] text-zinc-500 mt-1">
+                Razão Social: VTS Comércio e Serviços LTDA — CNPJ: 03.477.617/0001-90
+              </p>
+              <p className="text-[13px] text-zinc-500 mt-1">
+                Endereço: Rua Dr. Aureliano da Silva Arruda, 625 — São Paulo/SP — CEP 03960-050
+              </p>
+              <p className="text-[13px] text-zinc-500 mt-3">
                 Você também pode registrar uma reclamação junto à{" "}
                 <strong className="text-zinc-400">Autoridade Nacional de Proteção de Dados (ANPD)</strong>{" "}
                 caso considere que o tratamento dos seus dados viola a LGPD.
@@ -318,7 +410,7 @@ export default function PoliticaDePrivacidade() {
       <footer className="border-t border-white/[0.04] py-8">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 flex items-center justify-between">
           <span className="text-[12px] text-zinc-600">
-            &copy; {new Date().getFullYear()} Keymatic — Todos os direitos reservados.
+            Keymatic &copy; 2025 — VTS Comércio e Serviços LTDA — CNPJ: 03.477.617/0001-90
           </span>
           <a href="/" className="text-[12px] text-zinc-600 hover:text-zinc-400 transition-colors">
             Voltar ao site
