@@ -8,6 +8,7 @@ import {
   Sparkles,
   LayoutDashboard,
   Mail,
+  ChevronRight,
 } from "lucide-react";
 
 const PANELS = [
@@ -699,6 +700,35 @@ export default function ImageAccordion() {
                 </div>
               );
             })}
+          </div>
+
+          {/* Swipe hint + dot indicators */}
+          <div className="flex items-center justify-between mt-3 px-2">
+            {/* Dots */}
+            <div className="flex gap-1.5">
+              {PANELS.map((panel, i) => (
+                <button
+                  key={panel.id}
+                  onClick={() => setActiveIndex(i)}
+                  className="rounded-full transition-all duration-300"
+                  style={{
+                    width: i === activeIndex ? 20 : 6,
+                    height: 6,
+                    background: i === activeIndex ? panel.color : "rgba(255,255,255,0.2)",
+                  }}
+                />
+              ))}
+            </div>
+
+            {/* Swipe arrow hint */}
+            <motion.div
+              className="flex items-center gap-1 text-zinc-500"
+              animate={{ x: [0, 6, 0], opacity: [0.5, 1, 0.5] }}
+              transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <span className="text-[11px] font-medium">Deslize</span>
+              <ChevronRight size={14} />
+            </motion.div>
           </div>
         </div>
       </div>

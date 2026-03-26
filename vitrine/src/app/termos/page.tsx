@@ -36,7 +36,7 @@ export default function TermosDeUso() {
             Termos de Uso
           </h1>
           <p className="text-zinc-500 text-sm">
-            Última atualização: março de 2025
+            Última atualização: março de 2026
           </p>
         </div>
 
@@ -312,7 +312,7 @@ export default function TermosDeUso() {
       <footer className="border-t border-white/[0.04] py-8">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 flex items-center justify-between">
           <span className="text-[12px] text-zinc-600">
-            Keymatic &copy; 2025 — VTS Comércio e Serviços LTDA — CNPJ: 03.477.617/0001-90
+            Keymatic &copy; 2026 — VTS Comércio e Serviços LTDA — CNPJ: 03.477.617/0001-90
           </span>
           <a href="/" className="text-[12px] text-zinc-600 hover:text-zinc-400 transition-colors">
             Voltar ao site

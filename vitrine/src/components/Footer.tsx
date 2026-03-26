@@ -147,7 +147,7 @@ export default function Footer() {
           <div className="flex items-center gap-2.5">
             <KeymaticIcon size={26} />
             <span className="text-[12px] text-zinc-600">
-              Keymatic &copy; 2025 &mdash; VTS Com&eacute;rcio e Servi&ccedil;os LTDA &mdash; CNPJ: 03.477.617/0001-90
+              Keymatic &copy; 2026 &mdash; VTS Com&eacute;rcio e Servi&ccedil;os LTDA &mdash; CNPJ: 03.477.617/0001-90
             </span>
           </div>
           <a href="#" className="text-[12px] text-zinc-600 hover:text-zinc-400 transition-colors">
