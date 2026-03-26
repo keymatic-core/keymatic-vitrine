@@ -39,6 +39,7 @@
 /* ─── Base ───────────────────────────────────────────────── */
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -338,6 +339,15 @@ html {
 .animate-infinite-scroll {
   animation: infinite-scroll 25s linear infinite;
   width: max-content;
+}
+
+/* ─── Scrollbar hide for mobile carousels ─────────────────── */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }
 
 /* ─── Quiz CTA Button — Rotating Glow Border ────────────── */

@@ -577,7 +577,7 @@ export default function ImageAccordion() {
           </div>
 
           {/* Right — Accordion */}
-          <div className="flex gap-2 h-[340px] sm:h-[400px]">
+          <div className="hidden lg:flex gap-2 h-[340px] sm:h-[400px]">
             {PANELS.map((panel, i) => {
               const isActive = i === activeIndex;
               const Icon = panel.icon;
@@ -653,24 +653,49 @@ export default function ImageAccordion() {
 
         {/* Mobile: card carousel alternative */}
         <div className="lg:hidden mt-8">
-          <div className="flex gap-3 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide">
+          <div className="flex gap-3 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide px-1">
             {PANELS.map((panel, i) => {
               const Icon = panel.icon;
               return (
                 <div
                   key={panel.id}
-                  className={`snap-center shrink-0 w-[85vw] rounded-xl p-4 border transition-colors ${
-                    i === activeIndex
-                      ? "border-white/20 bg-zinc-800/60"
-                      : "border-white/5 bg-zinc-900/60"
-                  }`}
+                  className="snap-center shrink-0 w-[85vw] rounded-xl overflow-hidden border transition-colors"
+                  style={{
+                    borderColor: i === activeIndex ? `${panel.color}40` : "rgba(255,255,255,0.05)",
+                    background: i === activeIndex
+                      ? `linear-gradient(180deg, ${panel.color}10 0%, rgba(24,24,27,0.95) 100%)`
+                      : "rgba(24,24,27,0.6)",
+                  }}
                   onClick={() => setActiveIndex(i)}
                 >
-                  <div className="flex items-center gap-2 mb-2">
+                  {/* Header */}
+                  <div className="flex items-center gap-2 p-4 pb-2">
                     <Icon size={16} style={{ color: panel.color }} />
                     <span className="text-sm font-semibold text-white">{panel.title}</span>
                   </div>
-                  <p className="text-[13px] text-zinc-400 leading-relaxed">{panel.description}</p>
+
+                  {/* Mockup illustration */}
+                  <div className="px-2">
+                    <div className="rounded-lg bg-zinc-900/60 overflow-hidden">
+                      <MockupIllustration type={panel.mockup} color={panel.color} />
+                    </div>
+                  </div>
+
+                  {/* Description + badges */}
+                  <div className="p-4 pt-3">
+                    <p className="text-[13px] text-zinc-400 leading-relaxed mb-3">{panel.description}</p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {panel.badges.map((badge) => (
+                        <span
+                          key={badge}
+                          className="px-2 py-0.5 rounded text-[10px] font-medium text-white/70 border"
+                          style={{ borderColor: `${panel.color}30`, background: `${panel.color}12` }}
+                        >
+                          {badge}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               );
             })}
