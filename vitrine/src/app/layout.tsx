@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import QuizBanner from "../components/QuizBanner";
+import GoogleAnalytics from "../components/GoogleAnalytics";
 
 const inter = Inter({
   variable: "--font-geist-sans",
@@ -102,6 +103,44 @@ export default function RootLayout({
       <body className={`${inter.variable} ${jetbrainsMono.variable} antialiased`}>
         {children}
         <QuizBanner />
+        <GoogleAnalytics />
+
+        {/* Organization Schema — JSON-LD */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "Keymatic",
+              legalName: "VTS Comércio e Serviços LTDA",
+              url: "https://keymatic.com.br",
+              logo: "https://keymatic.com.br/logo-keymatic-full.svg",
+              description: "E-commerce de elite, automação inteligente e consultoria em IA. Da solidez de 20 anos da VTS Informática nasce a Keymatic.",
+              foundingDate: "2005",
+              address: {
+                "@type": "PostalAddress",
+                addressLocality: "São Paulo",
+                addressRegion: "SP",
+                addressCountry: "BR",
+              },
+              contactPoint: {
+                "@type": "ContactPoint",
+                telephone: "+55-11-93429-4637",
+                contactType: "sales",
+                availableLanguage: "Portuguese",
+              },
+              sameAs: [
+                "https://www.instagram.com/keymatic.tech",
+              ],
+              founder: [
+                { "@type": "Person", name: "Tércio Rigonati", jobTitle: "CTO" },
+                { "@type": "Person", name: "Valéria Barboza", jobTitle: "COO" },
+                { "@type": "Person", name: "Matheus Barboza", jobTitle: "Estrategista de Inovação" },
+              ],
+            }),
+          }}
+        />
       </body>
     </html>
   );
