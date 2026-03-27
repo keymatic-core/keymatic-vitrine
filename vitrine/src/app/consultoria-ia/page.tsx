@@ -19,6 +19,9 @@ export const metadata: Metadata = {
   title: "Consultoria em IA — Keymatic",
   description:
     "Workshop, treinamento e implantação hands-on de Inteligência Artificial para sua empresa. Do zero ao resultado com acompanhamento contínuo.",
+  alternates: {
+    canonical: "https://keymatic.com.br/consultoria-ia",
+  },
   openGraph: {
     title: "Consultoria em IA — Keymatic",
     description: "Transforme sua equipe com Inteligência Artificial. Workshop, treinamento e implantação hands-on.",

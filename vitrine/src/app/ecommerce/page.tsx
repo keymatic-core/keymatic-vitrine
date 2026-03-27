@@ -21,6 +21,9 @@ export const metadata: Metadata = {
   title: "E-commerce de Elite",
   description:
     "Plataforma e-commerce completa com checkout inteligente, estoque blindado e recomendações por IA. Da Keymatic, com 20 anos de tradição da VTS Informática.",
+  alternates: {
+    canonical: "https://keymatic.com.br/ecommerce",
+  },
   openGraph: {
     title: "E-commerce de Elite — Keymatic",
     description: "Lojas virtuais que vendem enquanto você dorme.",

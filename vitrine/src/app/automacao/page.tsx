@@ -20,6 +20,9 @@ export const metadata: Metadata = {
   title: "Automação Inteligente — Keymatic",
   description:
     "Automatize seu negócio com WhatsApp, processos internos e integrações entre sistemas. Diagnóstico gratuito para pequenas empresas.",
+  alternates: {
+    canonical: "https://keymatic.com.br/automacao",
+  },
   openGraph: {
     title: "Automação Inteligente — Keymatic",
     description: "Seu negócio no piloto automático. WhatsApp, processos e integrações.",

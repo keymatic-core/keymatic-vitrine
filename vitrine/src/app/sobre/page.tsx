@@ -16,6 +16,9 @@ export const metadata: Metadata = {
   title: "Quem Somos — Keymatic",
   description:
     "Conheça a história da VTS Informática e da Keymatic. 20 anos transformando tecnologia em resultado para pequenas empresas em São Paulo.",
+  alternates: {
+    canonical: "https://keymatic.com.br/sobre",
+  },
   openGraph: {
     title: "Quem Somos — Keymatic",
     description:
