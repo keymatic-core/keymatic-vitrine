@@ -23,7 +23,14 @@ export async function POST(request: NextRequest) {
     }).select("id").single();
 
     if (error) {
-      console.error("[QUIZ_ERROR]", error.message);
+      console.error("[QUIZ_ERROR] Supabase insert failed:", {
+        message: error.message,
+        code: error.code,
+        details: error.details,
+        hint: error.hint,
+        contact_name: contact.name,
+        timestamp: new Date().toISOString(),
+      });
       return NextResponse.json(
         { error: "Erro ao salvar resposta" },
         { status: 500 }
@@ -31,8 +38,11 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json({ success: true, profileId: data.id });
-  } catch {
-    console.error("[QUIZ_ERROR] Failed to process quiz submission");
+  } catch (err) {
+    console.error("[QUIZ_ERROR] Failed to process quiz submission:", {
+      error: err instanceof Error ? err.message : String(err),
+      timestamp: new Date().toISOString(),
+    });
     return NextResponse.json(
       { error: "Erro ao processar quiz" },
       { status: 500 }

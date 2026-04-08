@@ -47,6 +47,7 @@ export default function QuizModal({ isOpen, onClose }: QuizModalProps) {
     delivery: "whatsapp",
   });
   const [submitting, setSubmitting] = useState(false);
+  const [saveError, setSaveError] = useState(false);
 
   const profile = getQuizProfile(answers);
   const totalSteps = QUIZ_STEPS.length;
@@ -57,6 +58,7 @@ export default function QuizModal({ isOpen, onClose }: QuizModalProps) {
     setAnswers({});
     setContact({ name: "", whatsapp: "", email: "", delivery: "whatsapp" });
     setSubmitting(false);
+    setSaveError(false);
   }, []);
 
   function handleClose() {
@@ -90,13 +92,18 @@ export default function QuizModal({ isOpen, onClose }: QuizModalProps) {
     setSubmitting(true);
 
     try {
-      await fetch("/api/quiz", {
+      const res = await fetch("/api/quiz", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ answers, contact }),
       });
-    } catch {
-      // silently continue — quiz result is more important than saving
+      if (!res.ok) {
+        console.warn("[Quiz] Falha ao salvar lead — status:", res.status);
+        setSaveError(true);
+      }
+    } catch (err) {
+      console.warn("[Quiz] Falha ao salvar lead:", err);
+      setSaveError(true);
     }
 
     localStorage.setItem(QUIZ_BANNER_KEY, "completed");
@@ -397,6 +404,13 @@ export default function QuizModal({ isOpen, onClose }: QuizModalProps) {
                     <p className="text-[13px] text-zinc-500 mb-6">
                       💡 {profile.recommendation}
                     </p>
+
+                    {saveError && (
+                      <div className="mb-4 px-4 py-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 text-[13px] text-left leading-relaxed">
+                        Seu resultado está aqui, mas houve uma instabilidade ao registrar seus dados.
+                        Fale conosco pelo WhatsApp para garantir seu e-book!
+                      </div>
+                    )}
 
                     <div className="space-y-3">
                       <button
