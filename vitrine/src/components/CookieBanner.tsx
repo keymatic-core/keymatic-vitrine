@@ -19,11 +19,13 @@ export default function CookieBanner() {
 
   function handleAccept() {
     localStorage.setItem(COOKIE_KEY, "accepted");
+    window.dispatchEvent(new StorageEvent("storage", { key: COOKIE_KEY, newValue: "accepted" }));
     setIsVisible(false);
   }
 
   function handleDecline() {
     localStorage.setItem(COOKIE_KEY, "declined");
+    window.dispatchEvent(new StorageEvent("storage", { key: COOKIE_KEY, newValue: "declined" }));
     setIsVisible(false);
   }
 

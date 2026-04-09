@@ -95,7 +95,11 @@ export default function QuizModal({ isOpen, onClose }: QuizModalProps) {
       const res = await fetch("/api/quiz", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ answers, contact }),
+        body: JSON.stringify({
+          answers,
+          contact,
+          consent: localStorage.getItem("keymatic-cookie-consent") === "accepted",
+        }),
       });
       if (!res.ok) {
         console.warn("[Quiz] Falha ao salvar lead — status:", res.status);
