@@ -50,13 +50,13 @@ export const QUIZ_STEPS: QuizStep[] = [
     ],
   },
   {
-    id: "ia",
-    question: "Qual sua relação com Inteligência Artificial?",
-    subtitle: "Sem julgamento — queremos te ajudar de verdade.",
+    id: "urgencia",
+    question: "Qual o seu momento agora?",
+    subtitle: "Isso nos ajuda a priorizar o que importa para você.",
     options: [
-      { id: "usa", label: "Já uso no dia a dia", emoji: "🤖" },
-      { id: "ouviu", label: "Ouvi falar, mas nunca usei", emoji: "👀" },
-      { id: "nao_sabe", label: "Não sei nem por onde começar", emoji: "❓" },
+      { id: "agora", label: "Preciso resolver isso agora", emoji: "🔥" },
+      { id: "breve", label: "Quero começar nos próximos meses", emoji: "📅" },
+      { id: "explorando", label: "Estou só explorando por enquanto", emoji: "🔍" },
     ],
   },
   {
@@ -67,6 +67,16 @@ export const QUIZ_STEPS: QuizStep[] = [
       { id: "boa", label: "Tenho site e redes atualizados", emoji: "✅" },
       { id: "desatualizado", label: "Tenho, mas está desatualizado", emoji: "😅" },
       { id: "nao_tem", label: "Não tenho praticamente nada", emoji: "🚫" },
+    ],
+  },
+  {
+    id: "escala",
+    question: "Qual o tamanho da sua operação?",
+    subtitle: "Para sugerirmos soluções no tamanho certo.",
+    options: [
+      { id: "solo", label: "Trabalho sozinho", emoji: "🙋" },
+      { id: "pequeno", label: "Tenho de 2 a 10 pessoas", emoji: "👥" },
+      { id: "medio", label: "Mais de 10 pessoas", emoji: "🏗️" },
     ],
   },
 ];
@@ -84,10 +94,15 @@ export type QuizAnswers = Record<string, string>;
 
 // ─── Profile Mapping Logic ─────────────────────────────────
 export function getQuizProfile(answers: QuizAnswers): QuizProfile {
-  const { perfil, dor, ia, presenca } = answers;
+  const { perfil, dor, urgencia, presenca, escala } = answers;
 
-  // Pronto pra Decolar: já tem empresa + já usa IA + presença boa
-  if (perfil === "empresa" && ia === "usa" && presenca === "boa") {
+  // Pronto pra Decolar: empresa + equipe + presença boa + urgência alta
+  if (
+    perfil === "empresa" &&
+    presenca === "boa" &&
+    escala !== "solo" &&
+    urgencia !== "explorando"
+  ) {
     return QUIZ_PROFILES.decolar;
   }
 

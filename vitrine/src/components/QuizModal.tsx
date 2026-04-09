@@ -201,7 +201,7 @@ export default function QuizModal({ isOpen, onClose }: QuizModalProps) {
                       nascimento da Keymatic, preparamos um quiz especial.
                     </p>
                     <p className="text-zinc-500 text-[13px] mb-6">
-                      Responda 4 perguntas rápidas, descubra seu perfil digital
+                      Responda 5 perguntas rápidas, descubra seu perfil digital
                       e ganhe um <strong className="text-zinc-300">e-book exclusivo</strong> de presente.
                     </p>
 
@@ -238,7 +238,7 @@ export default function QuizModal({ isOpen, onClose }: QuizModalProps) {
                       </span>
                     </div>
 
-                    <h3 className="text-xl font-semibold text-white mb-1.5">
+                    <h3 className="text-xl font-semibold gradient-brand-text mb-1.5">
                       {QUIZ_STEPS[currentStep].question}
                     </h3>
                     {QUIZ_STEPS[currentStep].subtitle && (
@@ -401,13 +401,20 @@ export default function QuizModal({ isOpen, onClose }: QuizModalProps) {
                       </span>
                     </h3>
 
-                    <p className="text-zinc-400 text-sm leading-relaxed mb-3">
+                    <p className="text-zinc-200 text-sm leading-relaxed mb-4">
                       {profile.description}
                     </p>
 
-                    <p className="text-[13px] text-zinc-500 mb-6">
+                    <div
+                      className="mb-6 px-4 py-3 rounded-xl text-[13px] font-medium leading-relaxed text-left"
+                      style={{
+                        background: `${profile.color}10`,
+                        border: `1px solid ${profile.color}25`,
+                        color: profile.color,
+                      }}
+                    >
                       💡 {profile.recommendation}
-                    </p>
+                    </div>
 
                     {saveError && (
                       <div className="mb-4 px-4 py-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 text-[13px] text-left leading-relaxed">
