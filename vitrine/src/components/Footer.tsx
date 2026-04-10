@@ -13,8 +13,6 @@ const FOOTER_LINKS = {
   empresa: [
     { label: "Quem Somos", href: "/sobre" },
     { label: "Nossa História", href: "/sobre#historia" },
-    { label: "Blog", href: "#" },
-    { label: "Carreiras", href: "#" },
   ],
   legal: [
     { label: "Política de Privacidade", href: "/politica-de-privacidade" },
@@ -180,7 +178,7 @@ export default function Footer() {
               Keymatic &copy; 2026 &mdash; VTS Com&eacute;rcio e Servi&ccedil;os LTDA &mdash; CNPJ: 03.477.617/0001-90
             </span>
           </div>
-          <a href="#" className="text-[12px] text-zinc-600 hover:text-zinc-400 transition-colors">
+          <a href="/sitemap.xml" className="text-[12px] text-zinc-600 hover:text-zinc-400 transition-colors">
             Mapa do Site
           </a>
         </div>
