@@ -48,6 +48,7 @@ export default function QuizModal({ isOpen, onClose }: QuizModalProps) {
   });
   const [submitting, setSubmitting] = useState(false);
   const [saveError, setSaveError] = useState(false);
+  const [emailError, setEmailError] = useState<string | null>(null);
 
   const profile = getQuizProfile(answers);
   const totalSteps = QUIZ_STEPS.length;
@@ -59,6 +60,7 @@ export default function QuizModal({ isOpen, onClose }: QuizModalProps) {
     setContact({ name: "", whatsapp: "", email: "", delivery: "whatsapp" });
     setSubmitting(false);
     setSaveError(false);
+    setEmailError(null);
   }, []);
 
   function handleClose() {
@@ -90,6 +92,7 @@ export default function QuizModal({ isOpen, onClose }: QuizModalProps) {
   async function handleSubmit() {
     if (!contact.name || !contact.whatsapp) return;
     setSubmitting(true);
+    setEmailError(null);
 
     try {
       const res = await fetch("/api/quiz", {
@@ -101,7 +104,17 @@ export default function QuizModal({ isOpen, onClose }: QuizModalProps) {
           consent: localStorage.getItem("keymatic-cookie-consent") === "accepted",
         }),
       });
+
       if (!res.ok) {
+        // If it's an email validation error, show inline and block submission
+        if (res.status === 400) {
+          const data = await res.json().catch(() => ({}));
+          if (data?.reason && ["format", "disposable", "mx"].includes(data.reason)) {
+            setEmailError(data.error || "E-mail inválido");
+            setSubmitting(false);
+            return;
+          }
+        }
         console.warn("[Quiz] Falha ao salvar lead — status:", res.status);
         setSaveError(true);
       }
@@ -339,12 +352,22 @@ export default function QuizModal({ isOpen, onClose }: QuizModalProps) {
                         <input
                           type="email"
                           value={contact.email}
-                          onChange={(e) =>
-                            setContact({ ...contact, email: e.target.value })
-                          }
+                          onChange={(e) => {
+                            setContact({ ...contact, email: e.target.value });
+                            if (emailError) setEmailError(null);
+                          }}
                           placeholder="seu@email.com"
-                          className="w-full px-4 py-3 rounded-xl bg-white/[0.03] border border-white/[0.06] focus:border-brand-orange/40 focus:ring-2 focus:ring-brand-orange/10 text-sm text-white placeholder:text-zinc-600 outline-none transition-all"
+                          className={`w-full px-4 py-3 rounded-xl bg-white/[0.03] border text-sm text-white placeholder:text-zinc-600 outline-none transition-all ${
+                            emailError
+                              ? "border-red-500/40 focus:border-red-500/60 focus:ring-2 focus:ring-red-500/10"
+                              : "border-white/[0.06] focus:border-brand-orange/40 focus:ring-2 focus:ring-brand-orange/10"
+                          }`}
                         />
+                        {emailError && (
+                          <p className="mt-1.5 text-[12px] text-red-400 leading-relaxed">
+                            {emailError}
+                          </p>
+                        )}
                       </div>
 
                       <button

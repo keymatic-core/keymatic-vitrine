@@ -1,4 +1,4 @@
-import { Mail, MapPin, Phone } from "lucide-react";
+import { Mail, MapPin, Phone, Instagram, Linkedin, Facebook, Youtube } from "lucide-react";
 import WhatsAppIcon from "./icons/WhatsAppIcon";
 import { KeymaticIcon } from "./icons/KeymaticLogo";
 import { getWhatsAppUrl } from "../lib/utils";
@@ -23,6 +23,14 @@ const FOOTER_LINKS = {
     { label: "Política de Cookies", href: "/politica-de-privacidade#6" },
   ],
 };
+
+// TODO: substituir as URLs quando os perfis forem criados
+const SOCIAL_LINKS = [
+  { label: "Instagram", href: "https://www.instagram.com/keymatic.tech", icon: Instagram },
+  { label: "LinkedIn", href: "https://www.linkedin.com/company/keymatic", icon: Linkedin },
+  { label: "Facebook", href: "https://www.facebook.com/keymatic.tech", icon: Facebook },
+  { label: "YouTube", href: "https://www.youtube.com/@keymatic", icon: Youtube },
+];
 
 
 export default function Footer() {
@@ -138,7 +146,29 @@ export default function Footer() {
               </li>
             </ul>
 
-            {/* Socials — adicionar quando criar as contas */}
+            {/* Socials */}
+            <div className="mt-5 pt-5 border-t border-white/[0.04]">
+              <p className="text-[11px] font-semibold text-zinc-500 uppercase tracking-wider mb-3">
+                Siga-nos
+              </p>
+              <div className="flex items-center gap-2">
+                {SOCIAL_LINKS.map((social) => {
+                  const Icon = social.icon;
+                  return (
+                    <a
+                      key={social.label}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={social.label}
+                      className="w-9 h-9 flex items-center justify-center rounded-lg border border-white/[0.06] bg-white/[0.02] text-zinc-500 hover:text-brand-orange hover:border-brand-orange/30 hover:bg-brand-orange/5 transition-all"
+                    >
+                      <Icon size={15} />
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
           </div>
         </div>
 

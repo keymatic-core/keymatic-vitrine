@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabaseAdmin } from "../../../lib/supabase";
 import { rateLimit } from "../../../lib/rate-limit";
+import { validateEmail } from "../../../lib/email-validation";
 
 export async function POST(request: NextRequest) {
   try {
@@ -57,8 +58,22 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "WhatsApp inválido" }, { status: 400 });
     }
 
-    if (contact.email && (typeof contact.email !== "string" || contact.email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact.email))) {
-      return NextResponse.json({ error: "E-mail inválido" }, { status: 400 });
+    if (contact.email) {
+      if (typeof contact.email !== "string") {
+        return NextResponse.json({ error: "E-mail inválido" }, { status: 400 });
+      }
+      const emailCheck = await validateEmail(contact.email);
+      if (!emailCheck.valid) {
+        const messages = {
+          format: "E-mail com formato inválido",
+          disposable: "E-mails temporários não são aceitos",
+          mx: "Este domínio de e-mail não existe ou não recebe mensagens",
+        };
+        return NextResponse.json(
+          { error: messages[emailCheck.reason], reason: emailCheck.reason },
+          { status: 400 }
+        );
+      }
     }
 
     // Limit answers to prevent abuse (max 10 answers, values max 100 chars)
