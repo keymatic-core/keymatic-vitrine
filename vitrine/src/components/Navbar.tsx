@@ -52,7 +52,7 @@ const SOLUTIONS_DROPDOWN = [
   {
     icon: Bot,
     title: "Automação Inteligente",
-    desc: "WhatsApp + Evolution API e processos automáticos.",
+    desc: "WhatsApp Business API e processos automáticos.",
     href: "/automacao",
   },
   {

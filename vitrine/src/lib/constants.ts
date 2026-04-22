@@ -152,7 +152,7 @@ export const TECH_STACK = [
   { name: "PostgreSQL 16", category: "Database", status: "operational" },
   { name: "Redis 7", category: "Cache", status: "operational" },
   { name: "Celery", category: "Tasks", status: "operational" },
-  { name: "Evolution API", category: "WhatsApp", status: "operational" },
+  { name: "WhatsApp Business API", category: "WhatsApp", status: "operational" },
   { name: "Melhor Envio", category: "Logística", status: "operational" },
 ] as const;
 

@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     "Keymatic",
     "VTS Informática",
     "automação WhatsApp",
-    "Evolution API",
+    "WhatsApp Business API",
     "e-commerce de elite",
     "consultoria inteligência artificial",
   ],

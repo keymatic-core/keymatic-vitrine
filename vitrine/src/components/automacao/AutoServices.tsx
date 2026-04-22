@@ -10,7 +10,7 @@ const SERVICES = [
     title: "WhatsApp Automatizado",
     description:
       "Chatbot inteligente que responde, qualifica e encaminha. Atendimento 24h, disparos segmentados e follow-up automático.",
-    features: ["Respostas automáticas 24h", "Qualificação de leads", "Disparos segmentados", "Evolution API"],
+    features: ["Respostas automáticas 24h", "Qualificação de leads", "Disparos segmentados", "WhatsApp Business API"],
     color: "#25D366",
     gradient: "from-emerald-50 to-green-50",
     borderColor: "border-emerald-100 hover:border-emerald-200",
