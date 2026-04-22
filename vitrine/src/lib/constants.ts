@@ -152,7 +152,7 @@ export const TECH_STACK = [
   { name: "PostgreSQL 16", category: "Database", status: "operational" },
   { name: "Redis 7", category: "Cache", status: "operational" },
   { name: "Celery", category: "Tasks", status: "operational" },
-  { name: "WhatsApp Business API", category: "WhatsApp", status: "operational" },
+  { name: "WhatsApp Cloud API", category: "Meta Official", status: "operational" },
   { name: "Melhor Envio", category: "Logística", status: "operational" },
 ] as const;
 
@@ -190,7 +190,7 @@ export const FAQ_ITEMS = [
   {
     question: "Vocês atendem empresas de qual tamanho?",
     answer:
-      "Focamos em micro e pequenas empresas que querem crescer com tecnologia. Se você fatura entre R$ 10k e R$ 500k por mês e sente que está perdendo vendas ou tempo, somos para você.",
+      "Atendemos MEI, autônomos, micro e pequenas empresas — desde quem está começando até empresas com faturamento de até R$ 500k/mês. Se você sente que está perdendo vendas ou tempo, somos para você.",
   },
   {
     question: "Como é o suporte pós-implantação?",

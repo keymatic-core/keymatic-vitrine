@@ -34,7 +34,8 @@ const CHALLENGES = [
 ];
 
 const SIZES = [
-  { id: "micro", label: "Até R$ 30k/mês" },
+  { id: "iniciante", label: "Até R$ 5k/mês (MEI / autônomo)" },
+  { id: "micro", label: "R$ 5k — R$ 30k/mês" },
   { id: "pequena", label: "R$ 30k — R$ 100k/mês" },
   { id: "media", label: "R$ 100k — R$ 500k/mês" },
   { id: "grande", label: "Acima de R$ 500k/mês" },

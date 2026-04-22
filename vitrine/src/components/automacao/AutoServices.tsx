@@ -9,8 +9,8 @@ const SERVICES = [
     icon: () => <WhatsAppIcon size={22} className="text-emerald-500" />,
     title: "WhatsApp Automatizado",
     description:
-      "Chatbot inteligente que responde, qualifica e encaminha. Atendimento 24h, disparos segmentados e follow-up automático.",
-    features: ["Respostas automáticas 24h", "Qualificação de leads", "Disparos segmentados", "WhatsApp Business API"],
+      "Chatbot inteligente que responde, qualifica e encaminha. Atendimento 24h, notificações automatizadas e follow-up sob demanda.",
+    features: ["Respostas automáticas 24h", "Qualificação de leads", "Notificações automatizadas", "WhatsApp Cloud API (Official)"],
     color: "#25D366",
     gradient: "from-emerald-50 to-green-50",
     borderColor: "border-emerald-100 hover:border-emerald-200",

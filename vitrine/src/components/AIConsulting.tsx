@@ -10,7 +10,7 @@ export default function AIConsulting() {
   const [hoursPerDay, setHoursPerDay] = useState(3);
 
   const hoursSavedMonth = Math.round(employees * hoursPerDay * 22 * 0.7);
-  const costSaved = hoursSavedMonth * 35;
+  const costSaved = hoursSavedMonth * 25;
 
   return (
     <section className="section-light section-padding">
@@ -112,7 +112,7 @@ export default function AIConsulting() {
                 <span className="font-mono font-bold text-zinc-900 text-lg">R$ {costSaved.toLocaleString("pt-BR")}</span>
               </div>
               <p className="text-[13px] text-zinc-400 text-center pt-1">
-                * Estimativa baseada em R$ 35/hora e 70% de automação
+                * Estimativa baseada em R$ 25/hora e 70% de automação
               </p>
             </div>
           </motion.div>

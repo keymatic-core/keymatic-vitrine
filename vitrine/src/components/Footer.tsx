@@ -170,6 +170,15 @@ export default function Footer() {
           </div>
         </div>
 
+        {/* Meta / WhatsApp Disclaimer */}
+        <div className="py-5 border-t border-white/[0.04]">
+          <p className="text-[11px] text-zinc-600 leading-relaxed text-center sm:text-left max-w-3xl">
+            Keymatic é uma plataforma independente que utiliza a{" "}
+            <strong className="text-zinc-500">WhatsApp Cloud API oficial da Meta Platforms, Inc.</strong>
+            {" "}WhatsApp&reg; é uma marca registrada da Meta Inc. Este site não é afiliado, endossado ou patrocinado pela Meta.
+          </p>
+        </div>
+
         {/* Bottom Bar */}
         <div className="py-6 border-t border-white/[0.04] flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2.5">
