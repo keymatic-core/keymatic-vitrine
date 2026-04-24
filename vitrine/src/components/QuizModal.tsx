@@ -132,6 +132,11 @@ export default function QuizModal({ isOpen, onClose }: QuizModalProps) {
     window.open(getWhatsAppUrl(profile.whatsappMessage), "_blank");
   }
 
+  function handleEbookDownload() {
+    const ebookMessage = `Olá! Acabei de fazer o quiz dos 20 anos da Keymatic, meu perfil é ${profile.title}. Já baixei o e-book — quero conhecer como vocês podem ajudar meu negócio!`;
+    window.open(getWhatsAppUrl(ebookMessage), "_blank");
+  }
+
   const progress = screen === "questions"
     ? ((currentStep + 1) / totalSteps) * 100
     : screen === "contact"
@@ -462,11 +467,15 @@ export default function QuizModal({ isOpen, onClose }: QuizModalProps) {
                       <a
                         href="/downloads/guia-tecnologia-negocios-2026.pdf"
                         download="Guia-IA-Keymatic-2026.pdf"
+                        onClick={handleEbookDownload}
                         className="w-full flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl border border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/15 text-emerald-400 text-sm font-medium transition-colors"
                       >
                         <Download size={15} />
                         Baixar E-book Grátis
                       </a>
+                      <p className="text-[11px] text-zinc-500 text-center leading-relaxed">
+                        💬 Ao baixar o e-book, abriremos o WhatsApp para iniciarmos uma conversa.
+                      </p>
                     </div>
                   </motion.div>
                 )}
