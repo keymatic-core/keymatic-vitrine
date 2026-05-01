@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Entenda como o bot Keymatic atende seus clientes no WhatsApp combinando IA generativa com a base de conhecimento do seu negocio.">
+  <meta property="og:title" content="Como funciona o bot Keymatic">
+  <meta property="og:description" content="Atendimento automatizado no WhatsApp com IA generativa, RAG e API Oficial Meta. Entenda o fluxo passo a passo.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keymatic.com.br/como-funciona-o-bot">
+  <meta name="theme-color" content="#f97316">
+  <title>Como funciona o bot — Keymatic</title>
+  <link rel="icon" type="image/svg+xml" href="https://app.keymatic.com.br/icons/favicon.svg">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    :root {
+      --orange: #f97316;
+      --orange-dark: #ea580c;
+      --pink: #ec4899;
+      --purple: #a855f7;
+      --bg: #0a0a0b;
+      --bg-card: #131316;
+      --bg-soft: #1c1c20;
+      --border: #27272a;
+      --text: #fafafa;
+      --text-muted: #a1a1aa;
+      --text-dim: #71717a;
+      --gradient: linear-gradient(135deg, var(--orange) 0%, var(--pink) 50%, var(--purple) 100%);
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--orange); text-decoration: none; }
+    a:hover { color: var(--pink); }
+    h1, h2, h3 { line-height: 1.2; margin: 0 0 0.75em; font-weight: 700; letter-spacing: -0.02em; }
+    h1 { font-size: clamp(2rem, 5vw, 3.5rem); }
+    h2 { font-size: clamp(1.5rem, 3.5vw, 2.25rem); }
+    h3 { font-size: clamp(1.125rem, 2vw, 1.375rem); }
+    p { margin: 0 0 1em; color: var(--text-muted); }
+    .container { max-width: 1080px; margin: 0 auto; padding: 0 1.25rem; }
+    .section { padding: clamp(3rem, 8vw, 6rem) 0; }
+    .section:nth-of-type(odd) { background: var(--bg-card); }
+
+    /* ── Hero ───────────────────────────────────────────────── */
+    .hero {
+      padding: 4rem 0 5rem;
+      text-align: center;
+      background: radial-gradient(ellipse at top, rgba(249, 115, 22, 0.15), transparent 60%), var(--bg);
+      border-bottom: 1px solid var(--border);
+    }
+    .logo-mark {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.625rem;
+      margin-bottom: 2rem;
+    }
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 0.625rem;
+      background: var(--gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      font-size: 1.125rem;
+    }
+    .logo-text {
+      font-weight: 700;
+      font-size: 1.125rem;
+      color: var(--text);
+    }
+    .hero-eyebrow {
+      display: inline-block;
+      padding: 0.375rem 0.875rem;
+      border-radius: 99px;
+      background: rgba(249, 115, 22, 0.12);
+      border: 1px solid rgba(249, 115, 22, 0.3);
+      color: var(--orange);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      margin-bottom: 1.25rem;
+      letter-spacing: 0.02em;
+    }
+    .hero h1 {
+      max-width: 780px;
+      margin: 0 auto 1rem;
+    }
+    .hero h1 .gradient {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .hero-subtitle {
+      max-width: 620px;
+      margin: 0 auto 2.5rem;
+      font-size: 1.125rem;
+      color: var(--text-muted);
+    }
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.875rem 1.75rem;
+      background: var(--gradient);
+      color: white;
+      border-radius: 0.625rem;
+      font-weight: 600;
+      font-size: 1rem;
+      box-shadow: 0 8px 24px rgba(249, 115, 22, 0.25);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .hero-cta:hover {
+      color: white;
+      transform: translateY(-1px);
+      box-shadow: 0 12px 32px rgba(249, 115, 22, 0.35);
+    }
+
+    /* ── Generic blocks ─────────────────────────────────────── */
+    .lead {
+      font-size: 1.125rem;
+      color: var(--text-muted);
+      max-width: 720px;
+    }
+    .grid {
+      display: grid;
+      gap: 1.25rem;
+    }
+    @media (min-width: 720px) {
+      .grid-2 { grid-template-columns: repeat(2, 1fr); }
+      .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    }
+    .card {
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      border-radius: 0.875rem;
+      padding: 1.5rem;
+    }
+    .card h3 { color: var(--text); margin-bottom: 0.5rem; }
+    .card p { margin: 0; font-size: 0.9375rem; }
+    .icon-circle {
+      width: 44px;
+      height: 44px;
+      border-radius: 0.625rem;
+      background: rgba(249, 115, 22, 0.12);
+      color: var(--orange);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+    .icon-circle svg { width: 22px; height: 22px; }
+
+    /* ── Pipeline (numbered steps) ──────────────────────────── */
+    .pipeline {
+      counter-reset: step;
+      display: grid;
+      gap: 0.875rem;
+      margin-top: 2rem;
+    }
+    .step {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1.125rem;
+      padding: 1.25rem 1.5rem;
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      border-radius: 0.75rem;
+      align-items: start;
+      position: relative;
+    }
+    .step::before {
+      counter-increment: step;
+      content: counter(step);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--gradient);
+      color: white;
+      font-weight: 700;
+      font-size: 0.875rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .step h3 { font-size: 1.125rem; margin: 0 0 0.25rem; }
+    .step p { margin: 0; }
+    .step .pill {
+      display: inline-block;
+      padding: 0.125rem 0.5rem;
+      border-radius: 99px;
+      background: rgba(168, 85, 247, 0.12);
+      color: var(--purple);
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-left: 0.5rem;
+      vertical-align: middle;
+    }
+
+    /* ── Stat row ───────────────────────────────────────────── */
+    .stats {
+      display: grid;
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+    @media (min-width: 720px) { .stats { grid-template-columns: repeat(4, 1fr); } }
+    .stat {
+      text-align: center;
+      padding: 1.25rem 0.75rem;
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      border-radius: 0.75rem;
+    }
+    .stat-value {
+      font-size: 1.75rem;
+      font-weight: 800;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+    .stat-label {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Lead scoring table ─────────────────────────────────── */
+    .scoring-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1.25rem;
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      border-radius: 0.75rem;
+      overflow: hidden;
+    }
+    .scoring-table th, .scoring-table td {
+      padding: 0.875rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.9375rem;
+    }
+    .scoring-table th {
+      color: var(--text-dim);
+      font-weight: 600;
+      font-size: 0.8125rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .scoring-table tr:last-child td { border-bottom: 0; }
+    .scoring-table .score { font-weight: 700; color: var(--orange); }
+    .scoring-table .score.neg { color: #f87171; }
+
+    /* ── Tag legend (hot / warm / cold) ─────────────────────── */
+    .legend {
+      display: grid;
+      gap: 0.875rem;
+      margin-top: 1.25rem;
+    }
+    @media (min-width: 720px) { .legend { grid-template-columns: repeat(3, 1fr); } }
+    .legend-item {
+      padding: 1rem 1.25rem;
+      border-radius: 0.75rem;
+      border: 1px solid;
+    }
+    .legend-item.hot   { background: rgba(239, 68, 68, 0.08);  border-color: rgba(239, 68, 68, 0.3);  color: #fca5a5; }
+    .legend-item.warm  { background: rgba(249, 115, 22, 0.08); border-color: rgba(249, 115, 22, 0.3); color: #fdba74; }
+    .legend-item.cold  { background: rgba(59, 130, 246, 0.08); border-color: rgba(59, 130, 246, 0.3); color: #93c5fd; }
+    .legend-item strong { display: block; font-size: 0.9375rem; margin-bottom: 0.125rem; }
+    .legend-item span { font-size: 0.875rem; opacity: 0.85; }
+
+    /* ── FAQ ────────────────────────────────────────────────── */
+    .faq { display: grid; gap: 0.625rem; margin-top: 1.5rem; }
+    details {
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      border-radius: 0.75rem;
+      padding: 1rem 1.25rem;
+    }
+    details[open] { border-color: rgba(249, 115, 22, 0.3); }
+    summary {
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--text);
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::after {
+      content: "+";
+      font-size: 1.25rem;
+      color: var(--orange);
+      transition: transform 0.15s ease;
+    }
+    details[open] summary::after { content: "−"; }
+    details > p { margin: 0.875rem 0 0; font-size: 0.9375rem; }
+
+    /* ── CTA footer ─────────────────────────────────────────── */
+    .cta {
+      text-align: center;
+      padding: clamp(3.5rem, 8vw, 6rem) 1.25rem;
+      background: radial-gradient(ellipse at center, rgba(249, 115, 22, 0.12), transparent 60%), var(--bg);
+      border-top: 1px solid var(--border);
+    }
+    .cta h2 { max-width: 640px; margin: 0 auto 1rem; }
+    .cta p { max-width: 540px; margin: 0 auto 2rem; }
+
+    footer {
+      padding: 2rem 1.25rem 2.5rem;
+      text-align: center;
+      font-size: 0.8125rem;
+      color: var(--text-dim);
+      border-top: 1px solid var(--border);
+    }
+    footer a { color: var(--text-muted); }
+
+    /* ── Reduced motion ─────────────────────────────────────── */
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Hero ─────────────────────────────────────────────────── -->
+  <header class="hero">
+    <div class="container">
+      <div class="logo-mark">
+        <div class="logo-icon">K</div>
+        <div class="logo-text">Keymatic</div>
+      </div>
+      <span class="hero-eyebrow">Como funciona o bot</span>
+      <h1>Atendimento <span class="gradient">inteligente</span> no WhatsApp, do jeito que sua empresa fala.</h1>
+      <p class="hero-subtitle">
+        IA generativa + base de conhecimento do seu negócio + API Oficial Meta.
+        Sem fluxos engessados, sem respostas robotizadas.
+      </p>
+      <a class="hero-cta" href="#jornada">
+        Ver o passo a passo
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </header>
+
+  <!-- O que é a Keymatic ──────────────────────────────────── -->
+  <section class="section">
+    <div class="container">
+      <h2>O que é a Keymatic</h2>
+      <p class="lead">
+        Plataforma de atendimento automatizado para WhatsApp que combina <strong>IA generativa</strong>
+        com a <strong>base de conhecimento personalizada do seu negócio</strong>. Cada cliente da
+        Keymatic tem seu próprio bot — com nome, tom de voz e regras configuráveis.
+      </p>
+
+      <div class="grid grid-2" style="margin-top: 2.5rem;">
+        <div class="card">
+          <div class="icon-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <h3>3-8 segundos por resposta</h3>
+          <p>Do recebimento da mensagem ao envio da resposta — incluindo busca em base de conhecimento e geração via IA.</p>
+        </div>
+        <div class="card">
+          <div class="icon-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9c1.66 0 3.22.45 4.56 1.23"/></svg>
+          </div>
+          <h3>Selo verificado, zero risco de ban</h3>
+          <p>Integração via API Oficial do WhatsApp (Meta Cloud API). Conformidade com políticas e LGPD.</p>
+        </div>
+        <div class="card">
+          <div class="icon-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3z"/><path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>
+          </div>
+          <h3>Aprende com seu negócio</h3>
+          <p>Você ensina o bot uma vez (RAG); ele responde sobre serviços, preços, horários e políticas com naturalidade.</p>
+        </div>
+        <div class="card">
+          <div class="icon-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h3>Transferência inteligente</h3>
+          <p>O bot identifica quando precisa transferir para humano: urgência, irritação, pedido explícito ou quando não sabe a resposta.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- A jornada de uma mensagem ───────────────────────────── -->
+  <section class="section" id="jornada">
+    <div class="container">
+      <h2>A jornada de uma mensagem</h2>
+      <p class="lead">
+        Quando seu cliente envia uma mensagem, ela passa por um pipeline em fração de segundos.
+        Cada etapa pode resolver a conversa, ou passar para a próxima.
+      </p>
+
+      <div class="pipeline">
+        <div class="step">
+          <div></div>
+          <div>
+            <h3>Recebimento <span class="pill">Meta API</span></h3>
+            <p>Texto, áudio (transcrito automaticamente), imagem ou documento — tudo via API Oficial do WhatsApp.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div></div>
+          <div>
+            <h3>Validação</h3>
+            <p>Whitelist (números autorizados), deduplicação (WhatsApp pode entregar 2× a mesma mensagem) e anti-flood (10 mensagens/min por contato).</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div></div>
+          <div>
+            <h3>Pipeline de decisão (6 níveis) <span class="pill">núcleo</span></h3>
+            <p>Sessão → Handoff em curso → Urgência → Sentimento → Apresentação → Pedido explícito de humano → Resposta inteligente (RAG + IA) → Ações avançadas. Assim que um nível resolve, o processo para.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div></div>
+          <div>
+            <h3>Geração da resposta <span class="pill">RAG + LLM</span></h3>
+            <p>O bot busca os 3 melhores trechos da sua base de conhecimento, envia para a IA junto com o tom de voz configurado, e gera uma resposta natural.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div></div>
+          <div>
+            <h3>Envio</h3>
+            <p>A resposta é entregue no WhatsApp do cliente em 3-8 segundos. O sistema acompanha entregue / lida / falhada e dispara retry automático se necessário.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div></div>
+          <div>
+            <h3>Pontuação automática (Lead Scoring)</h3>
+            <p>A cada interação o lead ganha (ou perde) pontos. O sistema classifica como <strong>quente</strong>, <strong>morno</strong> ou <strong>frio</strong> automaticamente.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pipeline detalhado ──────────────────────────────────── -->
+  <section class="section">
+    <div class="container">
+      <h2>Os 6 níveis do pipeline, em detalhe</h2>
+      <p class="lead">
+        Cada nível tem uma responsabilidade única. Quando o assunto é tratado, o pipeline para —
+        a resposta sai em segundos sem rodar etapas desnecessárias.
+      </p>
+
+      <div class="grid grid-2" style="margin-top: 2.5rem;">
+        <div class="card">
+          <h3>Nível 0 — Sessão</h3>
+          <p>Identifica se o cliente já estava em conversa anterior. Reabre handoff humano se necessário (4h padrão), reinicia atendimento após inatividade longa (45 min padrão).</p>
+        </div>
+        <div class="card">
+          <h3>Nível 1 — Handoff em andamento</h3>
+          <p>Se um atendente humano já está cuidando do lead, o bot fica em silêncio. Não interrompe.</p>
+        </div>
+        <div class="card">
+          <h3>Nível 2 — Urgência</h3>
+          <p>Palavras como "urgente", "emergência", "agora" disparam transferência imediata para humano com aviso ao cliente.</p>
+        </div>
+        <div class="card">
+          <h3>Nível 2.5 — Sentimento</h3>
+          <p>A IA analisa o tom da mensagem em escala 1-5. Se o cliente está irritado/insatisfeito (1-2), transfere para humano antes que a situação piore.</p>
+        </div>
+        <div class="card">
+          <h3>Nível 3 — Apresentação</h3>
+          <p>Perguntas como "quem é você?" ou "o que é essa empresa?" ganham apresentação amigável personalizada para o tenant.</p>
+        </div>
+        <div class="card">
+          <h3>Nível 4 — Pedido explícito de humano</h3>
+          <p>"Quero falar com atendente", "preciso de um humano", "transfere para alguém" — transferência imediata.</p>
+        </div>
+        <div class="card">
+          <h3>Nível 5 — Resposta inteligente (RAG + IA)</h3>
+          <p>O coração do sistema: busca semântica na base de conhecimento + geração via Gemini (com Llama de fallback). Confiança acima de 0.30 → responde. Abaixo → próximo nível.</p>
+        </div>
+        <div class="card">
+          <h3>Nível 6 — Ações avançadas</h3>
+          <p>Function calling para executar ações configuradas: consultar pedido, verificar agenda, buscar dados externos. Se nada disso resolve, transfere para humano com resumo.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lead scoring ────────────────────────────────────────── -->
+  <section class="section">
+    <div class="container">
+      <h2>Lead scoring automático</h2>
+      <p class="lead">
+        Cada mensagem ajusta a pontuação do lead em tempo real. No fim, você tem uma fila ordenada
+        de quem está mais perto de comprar.
+      </p>
+
+      <table class="scoring-table">
+        <thead>
+          <tr><th>Sinal</th><th>Pontos</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Resposta do lead</td><td class="score">+5</td></tr>
+          <tr><td>Pergunta sobre serviço</td><td class="score">+10</td></tr>
+          <tr><td>Pergunta sobre preço</td><td class="score">+15</td></tr>
+          <tr><td>Sentimento positivo</td><td class="score">+10</td></tr>
+          <tr><td>Pediu agendamento / orçamento</td><td class="score">+25</td></tr>
+          <tr><td>Sentimento negativo</td><td class="score neg">−15</td></tr>
+          <tr><td>Inatividade prolongada</td><td class="score neg">−10</td></tr>
+        </tbody>
+      </table>
+
+      <div class="legend">
+        <div class="legend-item hot">
+          <strong>Hot (60+ pontos)</strong>
+          <span>Cliente engajado e perto de fechar — prioridade máxima do time comercial.</span>
+        </div>
+        <div class="legend-item warm">
+          <strong>Warm (30-59 pontos)</strong>
+          <span>Demonstrou interesse, vale follow-up programado para manter o calor.</span>
+        </div>
+        <div class="legend-item cold">
+          <strong>Cold (até 29 pontos)</strong>
+          <span>Pouco engajamento — entra em fila de reativação automática.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- O que torna a Keymatic diferente ────────────────────── -->
+  <section class="section">
+    <div class="container">
+      <h2>O que torna a Keymatic diferente</h2>
+
+      <div class="grid grid-3" style="margin-top: 2.5rem;">
+        <div class="card">
+          <div class="icon-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <h3>Conhecimento próprio</h3>
+          <p>Você ensina o bot uma vez. Ele entende o contexto do seu negócio sem decorar fluxos rígidos.</p>
+        </div>
+        <div class="card">
+          <div class="icon-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-9 4 18 3-9h4"/></svg>
+          </div>
+          <h3>Linguagem natural</h3>
+          <p>Respostas geradas por IA ficam fluidas. O cliente sente que está conversando com um atendente preparado.</p>
+        </div>
+        <div class="card">
+          <div class="icon-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+          </div>
+          <h3>API Oficial Meta</h3>
+          <p>Selo verde, zero risco de banimento, conformidade com LGPD. Suporte oficial do WhatsApp.</p>
+        </div>
+        <div class="card">
+          <div class="icon-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+          </div>
+          <h3>Transferência humana fluida</h3>
+          <p>Quando o bot transfere, o atendente recebe o contexto completo. Pode devolver pro bot quando quiser.</p>
+        </div>
+        <div class="card">
+          <div class="icon-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+          </div>
+          <h3>Pesquisa de satisfação</h3>
+          <p>CSAT automático após resolução, com cadência configurável. O cliente é ouvido sem ser bombardeado.</p>
+        </div>
+        <div class="card">
+          <div class="icon-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>
+          </div>
+          <h3>Painel completo</h3>
+          <p>Conversas, métricas, leads, campanhas, lead scoring e configurações — tudo em uma só tela.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats / números ─────────────────────────────────────── -->
+  <section class="section">
+    <div class="container">
+      <h2>Em números</h2>
+      <p class="lead">O que está rodando hoje na plataforma.</p>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-value">3-8s</div>
+          <div class="stat-label">Tempo de resposta</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">99,9%</div>
+          <div class="stat-label">Disponibilidade</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">6</div>
+          <div class="stat-label">Níveis no pipeline</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">24/7</div>
+          <div class="stat-label">Atendimento</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Privacidade & LGPD ──────────────────────────────────── -->
+  <section class="section">
+    <div class="container">
+      <h2>Privacidade e LGPD</h2>
+      <p class="lead">
+        Os dados dos seus clientes ficam isolados em ambiente multi-tenant. Cada empresa enxerga
+        apenas as próprias conversas, mensagens e leads.
+      </p>
+
+      <div class="grid grid-2" style="margin-top: 2rem;">
+        <div class="card">
+          <h3>Isolamento por tenant</h3>
+          <p>Toda mensagem, contato, métrica ou template é isolado por <code>tenant_id</code>. Não há vazamento entre clientes.</p>
+        </div>
+        <div class="card">
+          <h3>Direito ao esquecimento</h3>
+          <p>Endpoints de LGPD permitem exportar e apagar dados de um contato sob solicitação, conforme a Lei Geral de Proteção de Dados.</p>
+        </div>
+        <div class="card">
+          <h3>Whitelist por tenant</h3>
+          <p>Você decide quais números podem interagir com o bot — útil para testes e ambientes controlados.</p>
+        </div>
+        <div class="card">
+          <h3>Auditoria</h3>
+          <p>Histórico completo de mensagens, decisões do bot, transferências e respostas de pesquisa — disponível no painel.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ ─────────────────────────────────────────────────── -->
+  <section class="section">
+    <div class="container">
+      <h2>Perguntas frequentes</h2>
+
+      <div class="faq">
+        <details>
+          <summary>Preciso treinar o bot?</summary>
+          <p>Não no sentido tradicional. Você fornece textos sobre seu negócio (serviços, preços, horários, políticas) e o sistema indexa automaticamente. O bot consulta esse material em tempo real para responder.</p>
+        </details>
+        <details>
+          <summary>O bot pode atender em outros idiomas?</summary>
+          <p>Sim. O modelo de IA usado (Gemini) é multilíngue. O padrão é português brasileiro, mas podemos configurar inglês, espanhol e outros idiomas conforme o seu público.</p>
+        </details>
+        <details>
+          <summary>Quanto tempo leva para configurar um novo tenant?</summary>
+          <p>De 1 a 3 dias úteis. Inclui onboarding da base de conhecimento, configuração da API Oficial do WhatsApp (caso ainda não tenha), testes em sandbox e go-live.</p>
+        </details>
+        <details>
+          <summary>O que acontece quando o bot não sabe a resposta?</summary>
+          <p>Ele transfere para um atendente humano com um resumo do contexto. O atendente continua a conversa pelo painel da Keymatic e, ao terminar, pode devolver o controle para o bot ou encerrar a conversa.</p>
+        </details>
+        <details>
+          <summary>Posso ver todas as conversas?</summary>
+          <p>Sim. O painel mostra todas as conversas em tempo real, com filtros por status (aberta, em handoff, fechada), por canal e por agente. É possível assumir qualquer conversa manualmente a qualquer momento.</p>
+        </details>
+        <details>
+          <summary>O bot funciona fora do horário comercial?</summary>
+          <p>Sim, 24/7. Você configura a mensagem que ele envia fora do horário e o bot informa quando a equipe estará disponível para retornos que precisem de humano.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA ─────────────────────────────────────────────────── -->
+  <section class="cta">
+    <div class="container">
+      <h2>Pronto para automatizar seu atendimento?</h2>
+      <p>Fale com a gente e veja como a Keymatic se adapta ao seu negócio.</p>
+      <a class="hero-cta" href="https://wa.me/5511934294637?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20a%20Keymatic.">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+        Conversar no WhatsApp
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p style="margin: 0;">
+        © Keymatic — automação de atendimento para WhatsApp.
+        <a href="https://keymatic.com.br">keymatic.com.br</a>
+      </p>
+    </div>
+  </footer>
+</body>
+</html>
